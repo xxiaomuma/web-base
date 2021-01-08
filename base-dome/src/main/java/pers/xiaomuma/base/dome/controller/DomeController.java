@@ -4,13 +4,16 @@ package pers.xiaomuma.base.dome.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pers.xiaomuma.base.web.api.ResultDTO;
+import pers.xiaomuma.base.web.common.BaseBusinessException;
 
 @RestController
 @RequestMapping("test")
 public class DomeController {
 
     @GetMapping(value = "a")
-    public String test() {
-        return "hello word";
+    public ResultDTO<Void> test() {
+        //throw new BaseBusinessException("dddd");
+        return ResultDTO.success();
     }
 }
