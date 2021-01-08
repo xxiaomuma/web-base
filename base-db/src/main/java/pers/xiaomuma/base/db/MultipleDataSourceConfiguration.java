@@ -10,10 +10,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -34,16 +30,15 @@ import java.util.*;
 @Order(-1)
 @AutoConfigureOrder(-1)
 @ConditionalOnBean(MultipleDataSource.class)
-@Import(MybatisPlusConfiguration.class)
+@Import({MybatisPlusConfiguration.class, DynamicDataSourceRegistry.class})
 @Configuration
 @EnableTransactionManagement
-public class MultipleDataSourceConfiguration implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
+public class MultipleDataSourceConfiguration implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
     @Bean("dynamicDataSource")
-    public AbstractRoutingDataSource dynamicDataSource() {
-        MultipleDataSource multipleDataSource = getMultipleDataSource();
+    public AbstractRoutingDataSource dynamicDataSource(MultipleDataSource multipleDataSource) {
         DynamicRoutingDataSource dynamicRoutingDataSource = new DynamicRoutingDataSource();
         dynamicRoutingDataSource.setLenientFallback(false);
         Map<Object, Object> dataSourceMap = new HashMap<>();
@@ -82,7 +77,6 @@ public class MultipleDataSourceConfiguration implements ApplicationContextAware,
         factoryBean.setMapperLocations(resolver.getResources("classpath*:/mapper/**/*.xml"));
 
         Set<Interceptor> interceptors = new HashSet<>();
-       // interceptors.add(new MybatisSQLParameterInterceptor());
         interceptors.add(new PaginationInterceptor());
 
         factoryBean.setPlugins(interceptors.toArray(new Interceptor[0]));
@@ -104,32 +98,8 @@ public class MultipleDataSourceConfiguration implements ApplicationContextAware,
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
-
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        MultipleDataSource multipleDataSource = getMultipleDataSource();
-        Set<String> dataSources = multipleDataSource.getDataSources();
-        String defaultDataSource = multipleDataSource.getDefaultDataSource();
-        dataSources.forEach(dataSource -> {
-            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(MultipleDataSource.class);
-            if (dataSource.equalsIgnoreCase(defaultDataSource)) {
-                builder.getBeanDefinition().setPrimary(true);
-            }
-            registry.registerBeanDefinition(dataSource, builder.getBeanDefinition());
-        });
-    }
-
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException {
-        //
-    }
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
-    }
-
-    private MultipleDataSource getMultipleDataSource() {
-        return applicationContext.getBean(MultipleDataSource.class);
     }
 }

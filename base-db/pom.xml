@@ -22,6 +22,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>pers.xiaomuma.web</groupId>
+            <artifactId>base-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- 驱动 -->
         <dependency>
             <groupId>mysql</groupId>

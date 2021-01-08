@@ -21,6 +21,7 @@
         <module>base-security</module>
         <module>base-web</module>
         <module>base-support</module>
+        <module>base-dome</module>
     </modules>
     <packaging>pom</packaging>
 
