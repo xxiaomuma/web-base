@@ -3,6 +3,7 @@ package pers.xiaomuma.web.dome.service.biz;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pers.xiaomuma.base.db.DynamicDataSourceContextHolder;
 import pers.xiaomuma.base.db.aop.DataSource;
 import pers.xiaomuma.web.dome.constant.DataSourceName;
 import pers.xiaomuma.web.dome.domain.Address;
@@ -18,9 +19,11 @@ public class CombBizService {
     private final IAddressService addressService;
     private final IVehicleService vehicleService;
 
-    @DataSource(DataSourceName.DOME1)
+    //@DataSource(DataSourceName.DOME1)
     public void findAddress() {
-        List<Address> addresses = addressService.list();
+        List<Address>  addresses = DynamicDataSourceContextHolder
+                .callInDataSource(DataSourceName.DOME1, addressService::list);
+        //List<Address> addresses = addressService.list();
         System.out.println(addresses.toString());
     }
 
