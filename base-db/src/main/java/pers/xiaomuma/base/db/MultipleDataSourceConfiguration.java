@@ -38,7 +38,8 @@ public class MultipleDataSourceConfiguration implements ApplicationContextAware 
     private ApplicationContext applicationContext;
 
     @Bean("dynamicDataSource")
-    public AbstractRoutingDataSource dynamicDataSource(MultipleDataSource multipleDataSource) {
+    public AbstractRoutingDataSource dynamicDataSource() {
+        MultipleDataSource multipleDataSource = applicationContext.getBean(MultipleDataSource.class);
         DynamicRoutingDataSource dynamicRoutingDataSource = new DynamicRoutingDataSource();
         dynamicRoutingDataSource.setLenientFallback(false);
         Map<Object, Object> dataSourceMap = new HashMap<>();
@@ -83,6 +84,7 @@ public class MultipleDataSourceConfiguration implements ApplicationContextAware 
 
         factoryBean.setConfiguration(configuration);
         SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
+        assert sqlSessionFactory != null;
         sqlSessionFactory.getConfiguration().setMapUnderscoreToCamelCase(true);
         sqlSessionFactory.getConfiguration().setJdbcTypeForNull(JdbcType.NULL);
 

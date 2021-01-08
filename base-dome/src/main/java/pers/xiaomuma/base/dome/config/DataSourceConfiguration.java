@@ -9,7 +9,7 @@ import pers.xiaomuma.base.db.MultipleDataSource;
 
 
 @Configuration
-@MapperScan(basePackages = "pers.xiaomuma.web.dome.dao")
+@MapperScan(basePackages = "pers.xiaomuma.base.dome.dao")
 public class DataSourceConfiguration {
 
     @Bean
