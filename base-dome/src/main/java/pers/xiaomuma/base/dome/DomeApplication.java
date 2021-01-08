@@ -3,10 +3,9 @@ package pers.xiaomuma.base.dome;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
-import pers.xiaomuma.base.db.config.BaseDbConfiguration;
+import pers.xiaomuma.base.web.EnableBaseConfiguration;
 
-@Import(BaseDbConfiguration.class)
+@EnableBaseConfiguration
 @SpringBootApplication
 public class DomeApplication {
 
