@@ -3,14 +3,26 @@ spring:
     base-dome:
       dome1:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://10.198.25.4:3306/yd_logistic?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false
+        url: jdbc:mysql://127.0.0.1:3306/dome1?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false
         username: root
-        password: yxbl12369
+        password: 12369
       dome2:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://10.198.25.4:3306/tianqi_airport?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false
+        url: jdbc:mysql://127.0.0.1:3306/dome2?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false
         username: root
-        password: yxbl12369
+        password: 12369
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    lettuce:
+      pool:
+        max-idle: 10
+        min-idle: 2
+        max-wait: 100
+    password: 12369
+    timeout: 10000
 
 logging:
   level:

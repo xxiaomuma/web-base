@@ -10,7 +10,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import pers.xiaomuma.base.web.ApplicationEnv;
 import pers.xiaomuma.base.web.GlobalExceptionTranslator;
-import pers.xiaomuma.base.web.common.utils.JsonUtils;
+import pers.xiaomuma.base.common.utils.JsonUtils;
 
 
 @Configuration

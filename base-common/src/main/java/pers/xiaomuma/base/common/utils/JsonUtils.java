@@ -1,4 +1,4 @@
-package pers.xiaomuma.base.web.common.utils;
+package pers.xiaomuma.base.common.utils;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
