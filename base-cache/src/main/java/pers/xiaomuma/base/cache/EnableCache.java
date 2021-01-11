@@ -12,6 +12,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import({ RedisConfiguration.class , RedisAutoConfiguration.class})
+@Import({ RedisConfiguration.class, RedisAutoConfiguration.class})
 public @interface EnableCache {
 }

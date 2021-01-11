@@ -21,6 +21,7 @@ spring:
         max-idle: 10
         min-idle: 2
         max-wait: 100
+        max-active: 11
     password: 12369
     timeout: 10000
 
