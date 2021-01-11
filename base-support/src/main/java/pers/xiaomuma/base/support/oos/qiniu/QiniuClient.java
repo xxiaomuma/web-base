@@ -45,10 +45,10 @@ public class QiniuClient {
         }
     }
 
-    public boolean delete(String bucket, String filename) {
+    public boolean delete(String bucket, String fileName) {
         Response response;
         try {
-            response = bucketManager.delete(bucket, filename);
+            response = bucketManager.delete(bucket, fileName);
         } catch (QiniuException var) {
             throw new RuntimeException("七牛云删除文件失败", var);
         }
