@@ -1,8 +1,8 @@
 package pers.xiaomuma.base.web.common;
 
 
-import pers.xiaomuma.base.web.api.BusinessCode;
-import pers.xiaomuma.base.web.api.IResultCode;
+import pers.xiaomuma.base.common.api.BusinessCode;
+import pers.xiaomuma.base.common.api.IResultCode;
 
 public class BaseBusinessException extends RuntimeException {
 

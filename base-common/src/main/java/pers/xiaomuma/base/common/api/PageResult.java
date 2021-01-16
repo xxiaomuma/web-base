@@ -1,4 +1,4 @@
-package pers.xiaomuma.base.web.api;
+package pers.xiaomuma.base.common.api;
 
 import com.google.common.collect.Lists;
 
