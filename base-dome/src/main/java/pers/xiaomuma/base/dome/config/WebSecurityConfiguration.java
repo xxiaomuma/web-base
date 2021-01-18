@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import pers.xiaomuma.base.dome.service.biz.SmsUserDetailsService;
+import pers.xiaomuma.base.dome.service.biz.SmsUserLoginChecker;
 import pers.xiaomuma.base.security.authentication.handler.DefaultAuthenticationFailureHandler;
 import pers.xiaomuma.base.security.authentication.handler.JwtAuthenticationSuccessHandler;
 import pers.xiaomuma.base.security.authentication.jwt.JwtAuthenticationConfiguration;
@@ -27,13 +29,13 @@ import pers.xiaomuma.base.security.login.sms.SmsAuthenticationProvider;
 @EnableWebSecurity
 @Import({
         JwtAuthenticationConfiguration.class,
-        SmsAuthenticationProvider.class,
 })
 @RequiredArgsConstructor
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationConfigurer jwtAuthenticationConfigurer;
-    private final SmsAuthenticationProvider smsAuthenticationProvider;
+    private final SmsUserDetailsService smsUserDetailsService;
+    private final SmsUserLoginChecker smsUserLoginChecker;
     private final JwtTokenGenerator jwtTokenGenerator;
 
     @Override
@@ -71,5 +73,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationFailureHandler(new DefaultAuthenticationFailureHandler());
         filter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler(jwtTokenGenerator));
         return filter;
+    }
+
+    @Bean
+    public SmsAuthenticationProvider smsAuthenticationProvider() {
+        return new SmsAuthenticationProvider(smsUserDetailsService, smsUserLoginChecker);
     }
 }

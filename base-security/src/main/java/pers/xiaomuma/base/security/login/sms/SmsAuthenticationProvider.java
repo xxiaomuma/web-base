@@ -7,23 +7,29 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
+import pers.xiaomuma.base.security.login.DefaultAuthenticationChecker;
+import pers.xiaomuma.base.security.login.DefaultUserDetailsService;
 
 
 public class SmsAuthenticationProvider implements AuthenticationProvider {
 
     private final Logger logger = LoggerFactory.getLogger(SmsAuthenticationProvider.class);
-    private SmsUserDetailsService smsUserDetailsService = new DefaultSmsUserDetailsService();
-    private SmsUserLoginChecker smsUserLoginChecker = new DefaultSmsUserLoginChecker();
-    private UserDetailsChecker userDetailsChecker = new SmsAuthenticationProvider.DefaultSmsAuthenticationChecker();
+    private DefaultUserDetailsService userDetailsService;
+    private DefaultSmsUserLoginChecker userLoginChecker;
+    private UserDetailsChecker userDetailsChecker = new DefaultAuthenticationChecker();
 
+    public SmsAuthenticationProvider(DefaultUserDetailsService userDetailsService, DefaultSmsUserLoginChecker userLoginChecker) {
+        this.userDetailsService = userDetailsService;
+        this.userLoginChecker = userLoginChecker;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         SmsAuthenticationToken authenticationToken = (SmsAuthenticationToken) authentication;
         String mobile = authenticationToken.getMobile();
         String code = authenticationToken.getCode();
-        if (smsUserLoginChecker.check(mobile, code)) {
-            UserDetails userDetails = smsUserDetailsService.loadUserByMobile(mobile);
+        if (userLoginChecker.check(mobile, code)) {
+            UserDetails userDetails = userDetailsService.loadUserByMobile(mobile);
             userDetailsChecker.check(userDetails);
             return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         }
@@ -34,22 +40,5 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> clazz) {
         return (SmsAuthenticationToken.class.isAssignableFrom(clazz));
-    }
-
-    private static class DefaultSmsAuthenticationChecker implements UserDetailsChecker {
-        private DefaultSmsAuthenticationChecker() {
-        }
-
-        public void check(UserDetails user) {
-            if (!user.isAccountNonLocked()) {
-                throw new LockedException("账户已锁定");
-            } else if (!user.isEnabled()) {
-                throw new DisabledException("用户已禁用");
-            } else if (!user.isAccountNonExpired()) {
-                throw new AccountExpiredException("账户已过期");
-            } else if (!user.isCredentialsNonExpired()) {
-                throw new CredentialsExpiredException("凭证已失效");
-            }
-        }
     }
 }
