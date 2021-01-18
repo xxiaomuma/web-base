@@ -25,6 +25,15 @@ spring:
     password: 12369
     timeout: 10000
 
+auth:
+  jwt:
+    keyLocation: cert/jwt.jks
+    keyAlias: yxbl
+    keyPassword: yxblyxbl
+    jwtIss: ${spring.application.name}
+    accessTokenValidSeconds: 7200
+    refreshTokenValidSeconds: 7200
+
 logging:
   level:
     pers.xiaomuma: debug
