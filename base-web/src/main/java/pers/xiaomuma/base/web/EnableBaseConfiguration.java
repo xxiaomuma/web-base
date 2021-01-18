@@ -10,9 +10,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Import({BaseDbConfiguration.class, BaseWebConfiguration.class})
-@EnableAspectJAutoProxy(
-        exposeProxy = true,
-        proxyTargetClass = true
-)
 public @interface EnableBaseConfiguration {
 }

@@ -7,13 +7,16 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import pers.xiaomuma.base.web.ApplicationEnv;
 import pers.xiaomuma.base.web.GlobalExceptionTranslator;
 import pers.xiaomuma.base.common.utils.JsonUtils;
+import pers.xiaomuma.base.web.http.HttpConfiguration;
 
 
 @Configuration
+@Import({ HttpConfiguration.class })
 @EnableAspectJAutoProxy(exposeProxy = true, proxyTargetClass = true)
 public class BaseWebConfiguration {
 

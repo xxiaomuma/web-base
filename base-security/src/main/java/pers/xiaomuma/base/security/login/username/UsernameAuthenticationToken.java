@@ -13,6 +13,8 @@ public class UsernameAuthenticationToken extends AbstractAuthenticationToken {
 
     public UsernameAuthenticationToken(String username, String password) {
         super(null);
+        this.username = username;
+        this.password = password;
     }
 
     public UsernameAuthenticationToken(String username, String password, Collection<? extends GrantedAuthority> authorities) {
