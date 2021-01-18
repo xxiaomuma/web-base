@@ -28,8 +28,8 @@ spring:
 auth:
   jwt:
     keyLocation: cert/jwt.jks
-    keyAlias: yxbl
-    keyPassword: yxblyxbl
+    keyAlias: jwt
+    keyPassword: 123456
     jwtIss: ${spring.application.name}
     accessTokenValidSeconds: 7200
     refreshTokenValidSeconds: 7200
