@@ -6,14 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import pers.xiaomuma.base.dome.service.biz.SmsUserDetailsService;
+import pers.xiaomuma.base.dome.service.biz.UserDetailsService;
 import pers.xiaomuma.base.dome.service.biz.SmsUserLoginChecker;
 import pers.xiaomuma.base.security.authentication.handler.DefaultAuthenticationFailureHandler;
 import pers.xiaomuma.base.security.authentication.handler.JwtAuthenticationSuccessHandler;
@@ -24,17 +24,19 @@ import pers.xiaomuma.base.security.exception.RestAccessDeniedHandler;
 import pers.xiaomuma.base.security.exception.RestForbiddenEntryPoint;
 import pers.xiaomuma.base.security.login.sms.SmsAuthenticationFilter;
 import pers.xiaomuma.base.security.login.sms.SmsAuthenticationProvider;
+import pers.xiaomuma.base.security.login.username.UsernameAuthenticationFilter;
+import pers.xiaomuma.base.security.login.username.UsernameAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
 @Import({
-        JwtAuthenticationConfiguration.class,
+        JwtAuthenticationConfiguration.class
 })
 @RequiredArgsConstructor
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationConfigurer jwtAuthenticationConfigurer;
-    private final SmsUserDetailsService smsUserDetailsService;
+    private final UserDetailsService userDetailsService;
     private final SmsUserLoginChecker smsUserLoginChecker;
     private final JwtTokenGenerator jwtTokenGenerator;
 
@@ -48,7 +50,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
                 .accessDeniedHandler(new RestAccessDeniedHandler())
                 .authenticationEntryPoint(new RestForbiddenEntryPoint());
-        http.addFilterBefore(smsAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -68,7 +69,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SmsAuthenticationFilter smsAuthenticationFilter() throws Exception {
-        SmsAuthenticationFilter filter = new SmsAuthenticationFilter("/login/sms");
+        SmsAuthenticationFilter filter = new SmsAuthenticationFilter("/login/smss");
+        filter.setAuthenticationManager(super.authenticationManagerBean());
+        filter.setAuthenticationFailureHandler(new DefaultAuthenticationFailureHandler());
+        filter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler(jwtTokenGenerator));
+        return filter;
+    }
+
+    @Bean
+    public UsernameAuthenticationFilter usernameAuthenticationFilter() throws Exception {
+        UsernameAuthenticationFilter filter = new UsernameAuthenticationFilter("/login/usernames");
         filter.setAuthenticationManager(super.authenticationManagerBean());
         filter.setAuthenticationFailureHandler(new DefaultAuthenticationFailureHandler());
         filter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler(jwtTokenGenerator));
@@ -77,6 +87,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SmsAuthenticationProvider smsAuthenticationProvider() {
-        return new SmsAuthenticationProvider(smsUserDetailsService, smsUserLoginChecker);
+        return new SmsAuthenticationProvider(userDetailsService, smsUserLoginChecker);
     }
+
+    @Bean
+    public UsernameAuthenticationProvider usernameAuthenticationProvider() {
+        return new UsernameAuthenticationProvider(userDetailsService, passwordEncoder());
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth
+                .authenticationProvider(smsAuthenticationProvider())
+                .authenticationProvider(usernameAuthenticationProvider());
+    }
+
 }

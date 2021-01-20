@@ -9,7 +9,7 @@ import pers.xiaomuma.base.security.user.CustomUser;
 import java.util.Collections;
 
 @Component
-public class SmsUserDetailsService implements DefaultUserDetailsService {
+public class UserDetailsService implements DefaultUserDetailsService {
 
     @Override
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {

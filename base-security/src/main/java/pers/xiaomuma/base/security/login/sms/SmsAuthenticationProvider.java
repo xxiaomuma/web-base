@@ -1,5 +1,6 @@
 package pers.xiaomuma.base.security.login.sms;
 
+import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.*;
@@ -27,7 +28,13 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         SmsAuthenticationToken authenticationToken = (SmsAuthenticationToken) authentication;
         String mobile = authenticationToken.getMobile();
+        if (StrUtil.isBlank(mobile)) {
+            throw new BadCredentialsException("手机号码为空");
+        }
         String code = authenticationToken.getCode();
+        if (StrUtil.isBlank(code)) {
+            throw new BadCredentialsException("验证码为空");
+        }
         if (userLoginChecker.check(mobile, code)) {
             UserDetails userDetails = userDetailsService.loadUserByMobile(mobile);
             userDetailsChecker.check(userDetails);

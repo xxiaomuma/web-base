@@ -1,6 +1,7 @@
 package pers.xiaomuma.base.security.login.username;
 
 
+import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,7 +23,7 @@ public class UsernameAuthenticationProvider implements AuthenticationProvider {
     private DefaultUserDetailsService userDetailsService;
     private UserDetailsChecker userDetailsChecker = new DefaultAuthenticationChecker();
 
-    public UsernameAuthenticationProvider(PasswordEncoder passwordEncoder, DefaultUserDetailsService userDetailsService) {
+    public UsernameAuthenticationProvider(DefaultUserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
     }
@@ -31,7 +32,13 @@ public class UsernameAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernameAuthenticationToken authenticationToken = (UsernameAuthenticationToken) authentication;
         String username = authenticationToken.getUsername();
+        if (StrUtil.isBlank(username)) {
+            throw new BadCredentialsException("账号为空");
+        }
         String password = authenticationToken.getPassword();
+        if (StrUtil.isBlank(password)) {
+            throw new BadCredentialsException("密码为空");
+        }
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         if(!passwordEncoder.matches(password, userDetails.getPassword())) {
             logger.debug("用户名密码不匹配: username:[{}]", username);
