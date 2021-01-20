@@ -69,7 +69,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SmsAuthenticationFilter smsAuthenticationFilter() throws Exception {
-        SmsAuthenticationFilter filter = new SmsAuthenticationFilter("/login/smss");
+        SmsAuthenticationFilter filter = new SmsAuthenticationFilter();
         filter.setAuthenticationManager(super.authenticationManagerBean());
         filter.setAuthenticationFailureHandler(new DefaultAuthenticationFailureHandler());
         filter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler(jwtTokenGenerator));
@@ -78,7 +78,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UsernameAuthenticationFilter usernameAuthenticationFilter() throws Exception {
-        UsernameAuthenticationFilter filter = new UsernameAuthenticationFilter("/login/usernames");
+        UsernameAuthenticationFilter filter = new UsernameAuthenticationFilter();
         filter.setAuthenticationManager(super.authenticationManagerBean());
         filter.setAuthenticationFailureHandler(new DefaultAuthenticationFailureHandler());
         filter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler(jwtTokenGenerator));

@@ -31,8 +31,8 @@ auth:
     keyAlias: jwt
     keyPassword: 123456
     jwtIss: ${spring.application.name}
-    accessTokenValidSeconds: 7200
-    refreshTokenValidSeconds: 7200
+    expireSeconds: 60
+    autoRefreshToken: true
 
 logging:
   level:

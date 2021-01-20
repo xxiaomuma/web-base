@@ -24,7 +24,12 @@ public class UserDetailsService implements DefaultUserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        return null;
+        UserDetails userDetails = User.builder()
+                .username("xiaomuma")
+                .password("$2a$10$Hn.iWsoJ9D2zne0.HTbTNulsgkCE9HHGwv9b8Jc2alVEKqMQQLC8i")
+                .authorities(Collections.emptySet())
+                .accountLocked(false)
+                .build();
+        return new CustomUser(2, userDetails);
     }
 }

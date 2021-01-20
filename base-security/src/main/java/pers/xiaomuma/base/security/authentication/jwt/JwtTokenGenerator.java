@@ -10,7 +10,6 @@ import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.RsaSigner;
 import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 import pers.xiaomuma.base.common.utils.JsonUtils;
-
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyStore;
@@ -29,7 +28,6 @@ import java.util.Optional;
 
 public class JwtTokenGenerator {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private KeyPair keyPair;
     private JwtProperties properties;
 
@@ -61,14 +59,10 @@ public class JwtTokenGenerator {
         LinkedHashMap<String, String> tokenMap = new LinkedHashMap<>(2);
         LocalDateTime now = LocalDateTime.now();
         tokenMap.put("create_time", now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        int accessTokenValidSeconds = this.properties.getAccessTokenValidSeconds();
+        int accessTokenValidSeconds = this.properties.getExpireSeconds();
         String accessToken = this.generateAccessToken(aud, authorities, null);
-        tokenMap.put("access_token", accessToken);
-        tokenMap.put("access_token_expire_at", now.plusSeconds((long)accessTokenValidSeconds).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        int refreshTokenValidSeconds = this.properties.getRefreshTokenValidSeconds();
-        String refreshToken = this.generateRefreshToken(aud, authorities, null);
-        tokenMap.put("refresh_token", refreshToken);
-        tokenMap.put("refresh_token_expire_at", now.plusSeconds((long)refreshTokenValidSeconds).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        tokenMap.put("token", accessToken);
+        tokenMap.put("expire_time", now.plusSeconds(accessTokenValidSeconds).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         return tokenMap;
     }
 
@@ -80,7 +74,7 @@ public class JwtTokenGenerator {
                 .iss(this.properties.getJwtIss())
                 .sub("")
                 .iat(time)
-                .exp(time.plusSeconds(this.properties.getAccessTokenValidSeconds()))
+                .exp(time.plusSeconds(this.properties.getExpireSeconds()))
                 .authorities(authorities)
                 .additional(Optional.ofNullable(additional).orElse(Maps.newHashMap()))
                 .build();
@@ -109,7 +103,7 @@ public class JwtTokenGenerator {
         throw new BadCredentialsException("invalid and illegal iss");
     }
 
-    public String generateRefreshToken(String aud, Collection<GrantedAuthority> authorities, Map<String, String> additional) {
+   /* public String generateRefreshToken(String aud, Collection<GrantedAuthority> authorities, Map<String, String> additional) {
         LocalDateTime time = LocalDateTime.now();
         String claims = (new JwtPayloadBuilder())
                 .aud(aud)
@@ -122,7 +116,7 @@ public class JwtTokenGenerator {
                 .additional(Optional.ofNullable(additional).orElse(Maps.newHashMap()))
                 .build();
         return this.encode(claims);
-    }
+    }*/
 
     private String encode(String claims) {
         RSAPrivateKey privateKey = (RSAPrivateKey)this.keyPair.getPrivate();

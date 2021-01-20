@@ -11,8 +11,8 @@ public class JwtProperties {
     private String keyAlias;
     private String keyPassword;
     private String jwtIss;
-    private int accessTokenValidSeconds;
-    private int refreshTokenValidSeconds;
+    private int expireSeconds;
+    private boolean autoRefreshToken;
 
     public JwtProperties() {
     }
@@ -49,19 +49,19 @@ public class JwtProperties {
         this.jwtIss = jwtIss;
     }
 
-    public int getAccessTokenValidSeconds() {
-        return accessTokenValidSeconds;
+    public int getExpireSeconds() {
+        return expireSeconds;
     }
 
-    public void setAccessTokenValidSeconds(int accessTokenValidSeconds) {
-        this.accessTokenValidSeconds = accessTokenValidSeconds;
+    public void setExpireSeconds(int expireSeconds) {
+        this.expireSeconds = expireSeconds;
     }
 
-    public int getRefreshTokenValidSeconds() {
-        return refreshTokenValidSeconds;
+    public boolean isAutoRefreshToken() {
+        return autoRefreshToken;
     }
 
-    public void setRefreshTokenValidSeconds(int refreshTokenValidSeconds) {
-        this.refreshTokenValidSeconds = refreshTokenValidSeconds;
+    public void setAutoRefreshToken(boolean autoRefreshToken) {
+        this.autoRefreshToken = autoRefreshToken;
     }
 }

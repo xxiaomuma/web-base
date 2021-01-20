@@ -21,6 +21,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -41,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
         if (header != null && header.toLowerCase().startsWith("bearer ")) {
             String token = this.extractTokenFromHeader(header);
-            Authentication authentication = handleAuthentication(token, request);
+            Authentication authentication = handleAuthentication(token, request, response);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);
@@ -51,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return header.substring(7);
     }
 
-    private Authentication handleAuthentication(String jwtToken, HttpServletRequest request) throws AuthenticationException {
+    private Authentication handleAuthentication(String jwtToken, HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         Assert.hasText(jwtToken, "jwt token must not be bank");
         Map<String, String> data = this.jwtTokenGenerator.verify(jwtToken);
         if (MapUtil.isEmpty(data)) {
@@ -59,6 +62,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 this.logger.debug("token [{}]  is  invalid", jwtToken);
             }
             throw new BadCredentialsException("token is invalid");
+        }
+        if (this.jwtTokenGenerator.getProperties().isAutoRefreshToken()) {
+            autoRefreshToken(data, response);
         }
         String aud = data.get("aud");
         Collection<GrantedAuthority> authorities = AuthorityUtils
@@ -68,5 +74,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(customUser, null, authorities);
         authenticationToken.setDetails((new WebAuthenticationDetailsSource()).buildDetails(request));
         return authenticationToken;
+    }
+
+    private void autoRefreshToken(Map<String, String> data, HttpServletResponse response) {
+        LocalDateTime exp = LocalDateTime.parse(data.get("exp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        Duration duration = Duration.between(LocalDateTime.now(), exp);
+        long minutes = duration.toMinutes();
+        if (minutes <= 5) {
+            String aud = data.get("aud");
+            Collection<GrantedAuthority> authorities = AuthorityUtils
+                    .commaSeparatedStringToAuthorityList(data.get("authorities"));
+            String jwtToken = this.jwtTokenGenerator.generatePassport(aud, authorities).get("token");
+            response.addHeader("Authorization", jwtToken);
+        }
     }
 }
