@@ -68,7 +68,7 @@ public class JavaMailSendHandler implements EmailSendHandler {
     }
 
     @Override
-    public EmailResult syncSend(EmailParam emailDetails) {
+    public EmailResult sendSync(EmailParam emailDetails) {
         try {
             MimeMessage mimeMessage = this.assembleMimeMessage(emailDetails);
             javaMailSender.send(mimeMessage);
@@ -81,7 +81,7 @@ public class JavaMailSendHandler implements EmailSendHandler {
     }
 
     @Override
-    public void asyncSend(EmailParam emailDetails) {
+    public void sendAsync(EmailParam emailDetails) {
         MimeMessage mimeMessage;
         try {
             mimeMessage = this.assembleMimeMessage(emailDetails);

@@ -33,6 +33,18 @@
             <artifactId>base-security</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>pers.xiaomuma.web</groupId>
+            <artifactId>base-thirdparty</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.otter</groupId>
+            <artifactId>canal.client</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+
     </dependencies>
 
 </project>
