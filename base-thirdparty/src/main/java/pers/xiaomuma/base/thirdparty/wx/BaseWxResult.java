@@ -2,7 +2,7 @@ package pers.xiaomuma.base.thirdparty.wx;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-public class BaseWxErrorResult {
+public class BaseWxResult {
 
     @JsonAlias("errcode")
     private Integer errCode;

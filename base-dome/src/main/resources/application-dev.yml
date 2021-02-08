@@ -24,6 +24,9 @@ spring:
         max-active: 11
     password: 12369
     timeout: 10000
+wx:
+  appId: xxx
+  secret: xxx
 
 auth:
   jwt:

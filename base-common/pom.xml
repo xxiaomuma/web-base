@@ -24,6 +24,8 @@
         <hutool.version>5.0.7</hutool.version>
         <jackson-databind.version>2.9.8</jackson-databind.version>
         <jackson.version>2.9.8</jackson.version>
+        <bcprov.version>1.60</bcprov.version>
+        <jdom2.version>2.0.6</jdom2.version>
     </properties>
 
     <dependencies>
@@ -76,6 +78,21 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>${bcprov.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom2</artifactId>
+            <version>${jdom2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
         </dependency>
     </dependencies>
 

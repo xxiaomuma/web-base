@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 引入默认的日志格式设置。里面包含CONSOLE的日志格式了 -->
-    <include resouce="org/springframework/boot/logging/logback/base.xml"/>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <!--读取spring配置文件上的属性-->
     <springProperty scope="context" name="app.name" source="spring.application.name"/>
     <!-- 当前实例  外部属性 DSERVICE_INSTANCE_INDEX 默认0  -->
