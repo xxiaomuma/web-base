@@ -22,6 +22,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 import pers.xiaomuma.framework.core.global.ApplicationConstant;
 import pers.xiaomuma.framework.core.startup.BaseApplicationInitializer;
+import pers.xiaomuma.framework.rpc.aop.ExceptionCatcherInterceptor;
 import pers.xiaomuma.framework.rpc.config.DefaultContextRefresher;
 import pers.xiaomuma.framework.rpc.error.MsExceptionTranslator;
 import pers.xiaomuma.framework.rpc.feign.annotation.EnableCustomFeignClients;
@@ -29,13 +30,12 @@ import pers.xiaomuma.framework.rpc.feign.config.FeignCustomConfiguration;
 import pers.xiaomuma.framework.rpc.feign.okhttp.CustomOkHttpFeignClient;
 import pers.xiaomuma.framework.rpc.feign.okhttp.OkHttpLoggingInterceptor;
 import pers.xiaomuma.framework.rpc.resttemplate.EnhancedRestTemplate;
-
 import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableDiscoveryClient
 @EnableCustomFeignClients(basePackages = "pers.xiaomuma")
-@Import(FeignCustomConfiguration.class)
+@Import({FeignCustomConfiguration.class, ExceptionCatcherInterceptor.class})
 public class ServiceClientConfiguration {
 
 	@Bean

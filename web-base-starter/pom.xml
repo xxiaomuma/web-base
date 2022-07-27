@@ -10,7 +10,21 @@
     <artifactId>web-base-starter</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>pers.xiaomuma.web</groupId>
+            <artifactId>web-base-web</artifactId>
+            <version>2.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pers.xiaomuma.web</groupId>
+            <artifactId>web-base-rpc</artifactId>
+            <version>2.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pers.xiaomuma.web</groupId>
+            <artifactId>web-base-support</artifactId>
+            <version>2.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>
