@@ -1,22 +1,30 @@
 package pers.xiaomuma.framework.base.support.cache;
 
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.time.Duration;
+import java.util.Objects;
+
 
 @Configuration
-//@EnableConfigurationProperties({RedisProperties.class})
-@Import(LettuceConnectionFactory.class)
+@EnableConfigurationProperties({RedisProperties.class})
+//@Import(LettuceConnectionFactory.class)
 public class RedisConfiguration {
 
-/*    @Bean
+    @Bean
     public LettuceConnectionFactory lettuceConnectionFactory(RedisProperties redisProperties) {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setDatabase(redisProperties.getDatabase());
@@ -39,7 +47,7 @@ public class RedisConfiguration {
                         .commandTimeout(timeout)
                         .shutdownTimeout(timeout);
         return new LettuceConnectionFactory(configuration, builder.build());
-    }*/
+    }
 
     @Bean
     @ConditionalOnMissingBean(RedisTemplate.class)
