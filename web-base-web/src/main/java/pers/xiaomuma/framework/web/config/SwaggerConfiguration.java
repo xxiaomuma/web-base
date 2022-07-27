@@ -28,7 +28,6 @@ public class SwaggerConfiguration {
 						if (input == null) {return false;}
 						String packageName = input.declaringClass().getPackage().getName();
 						return (
-								packageName.startsWith("com.yxbl.") &&
 								(packageName.contains(".web") ||
 								 packageName.contains(".controller")
 								)
