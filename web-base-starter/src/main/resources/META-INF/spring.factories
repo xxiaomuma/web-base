@@ -1,6 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 pers.xiaomuma.framework.core.BaseConfiguration,\
-pers.xiaomuma.framework.base.support.database.DbConfiguration,\
+pers.xiaomuma.framework.support.database.DbConfiguration,\
 pers.xiaomuma.framework.rpc.ServiceClientConfiguration
 org.springframework.boot.SpringApplicationRunListener=\
 pers.xiaomuma.framework.core.startup.BaseApplicationContextInitializer
