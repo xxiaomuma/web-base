@@ -6,16 +6,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import pers.xiaomuma.framework.response.ResultCode;
+import pers.xiaomuma.framework.response.ResponseCode;
 
 import java.io.IOException;
 
-public class ResultCodeDeserializer extends JsonDeserializer<ResultCode> {
+public class ResultCodeDeserializer extends JsonDeserializer<ResponseCode> {
 
 	private final static String RESULT_CODE_FIELD_CODE = "code";
 
 	@Override
-	public ResultCode deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+	public ResponseCode deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
 		JsonNode treeNode = jsonParser.getCodec().readTree(jsonParser);
 		JsonNode codeNode = treeNode.get(RESULT_CODE_FIELD_CODE);
 		if (codeNode == null) {
@@ -24,6 +24,6 @@ public class ResultCodeDeserializer extends JsonDeserializer<ResultCode> {
 		if (!codeNode.isInt()) {
 			throw new JsonParseException(jsonParser, "field [code] type is not int");
 		}
-		return ResultCode.valueOf(codeNode.asInt());
+		return ResponseCode.valueOf(codeNode.asInt());
 	}
 }

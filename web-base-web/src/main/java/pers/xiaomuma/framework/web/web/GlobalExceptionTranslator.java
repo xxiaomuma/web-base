@@ -18,7 +18,7 @@ import pers.xiaomuma.framework.exception.AppBizException;
 import pers.xiaomuma.framework.exception.BadRequestParameterException;
 import pers.xiaomuma.framework.exception.InternalServerErrorException;
 import pers.xiaomuma.framework.response.BaseResponse;
-import pers.xiaomuma.framework.response.ResultCode;
+import pers.xiaomuma.framework.response.ResponseCode;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.Objects;
@@ -45,7 +45,7 @@ public class GlobalExceptionTranslator {
 		logger.warn("入参错误", e);
 		return BaseResponse
 				.builder()
-				.code(ResultCode.PARAM_TYPE_BIND_ERROR)
+				.code(ResponseCode.PARAM_TYPE_BIND_ERROR)
 				.message( e.getMessage())
 				.success(false)
 				.build();
@@ -57,7 +57,7 @@ public class GlobalExceptionTranslator {
 		String message = String.format("Missing Request Parameter: %s", e.getParameterName());
 		return BaseResponse
 				.builder()
-				.code(ResultCode.PARAM_MISS)
+				.code(ResponseCode.PARAM_MISS)
 				.message(message)
 				.success(false)
 				.build();
@@ -69,7 +69,7 @@ public class GlobalExceptionTranslator {
 		String message = String.format("Method Argument Type Mismatch: %s", e.getName());
 		return BaseResponse
 				.builder()
-				.code(ResultCode.PARAM_TYPE_BIND_ERROR)
+				.code(ResponseCode.PARAM_TYPE_BIND_ERROR)
 				.message(message)
 				.success(false)
 				.build();
@@ -83,7 +83,7 @@ public class GlobalExceptionTranslator {
 		String message = String.format("%s:%s", Objects.isNull(error) ? "" : error.getField(), Objects.isNull(error) ? "" : error.getDefaultMessage());
 		return BaseResponse
 				.builder()
-				.code(ResultCode.PARAM_IS_VALID)
+				.code(ResponseCode.PARAM_IS_VALID)
 				.message(message)
 				.success(false)
 				.build();
@@ -96,7 +96,7 @@ public class GlobalExceptionTranslator {
 		String message = String.format("%s:%s", Objects.isNull(error) ? "" : error.getField(), Objects.isNull(error) ? "" : error.getDefaultMessage());
 		return BaseResponse
 				.builder()
-				.code(ResultCode.PARAM_TYPE_BIND_ERROR)
+				.code(ResponseCode.PARAM_TYPE_BIND_ERROR)
 				.message(message)
 				.success(false)
 				.build();
@@ -107,7 +107,7 @@ public class GlobalExceptionTranslator {
 		logger.warn("Http Request Method Not Supported Exception", e);
 		return BaseResponse
 				.builder()
-				.code(ResultCode.METHOD_NOT_ALLOWED)
+				.code(ResponseCode.METHOD_NOT_ALLOWED)
 				.message("请求方法不支持")
 				.success(false)
 				.build();
@@ -122,7 +122,7 @@ public class GlobalExceptionTranslator {
 		String message = String.format("%s:%s", path, violation.getMessage());
 		return BaseResponse
 				.builder()
-				.code(ResultCode.PARAM_IS_VALID)
+				.code(ResponseCode.PARAM_IS_VALID)
 				.message(message)
 				.success(false)
 				.build();
@@ -133,7 +133,7 @@ public class GlobalExceptionTranslator {
 		logger.error("404 Not Found", e);
 		return BaseResponse
 				.builder()
-				.code(ResultCode.NOT_FOUND)
+				.code(ResponseCode.NOT_FOUND)
 				.message(e.getMessage())
 				.success(false)
 				.build();
@@ -155,7 +155,7 @@ public class GlobalExceptionTranslator {
 		logger.error("Internal Server Error", e);
 		return BaseResponse
 				.builder()
-				.code(ResultCode.INTERNAL_SERVER_ERROR)
+				.code(ResponseCode.INTERNAL_SERVER_ERROR)
 				.message(e.getMessage())
 				.success(false)
 				.build();

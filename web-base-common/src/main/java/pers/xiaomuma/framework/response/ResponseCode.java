@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public enum ResultCode {
+public enum ResponseCode {
 
     SUCCESS(HttpResponseCode.SC_OK, "OK"),
     UN_AUTHORIZED(HttpResponseCode.SC_UNAUTHORIZED, "未授权"),
@@ -32,12 +32,12 @@ public enum ResultCode {
 
     private String msg;
 
-    ResultCode() {
+    ResponseCode() {
         this.code = HttpResponseCode.SC_OK;
         this.msg = "Operation is Successful";
     }
 
-    ResultCode(int code, String msg) {
+    ResponseCode(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -58,8 +58,8 @@ public enum ResultCode {
         this.msg = msg;
     }
 
-    public static ResultCode valueOf(int codeNum) {
-        for (ResultCode resultCode : values()) {
+    public static ResponseCode valueOf(int codeNum) {
+        for (ResponseCode resultCode : values()) {
             if (resultCode.code == codeNum) {
                 return resultCode;
             }

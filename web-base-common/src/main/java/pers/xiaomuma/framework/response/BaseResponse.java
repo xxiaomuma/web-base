@@ -17,23 +17,23 @@ public class BaseResponse {
     @Builder.Default
     @Getter @Setter
     @JsonDeserialize(using = ResultCodeDeserializer.class)
-    private ResultCode code = ResultCode.SUCCESS;
+    private ResponseCode code = ResponseCode.SUCCESS;
     @Builder.Default
     @Getter @Setter
     private boolean success = true;
 
-    public void setCode(ResultCode code) {
+    public void setCode(ResponseCode code) {
         this.code = code;
-        this.success = (code == ResultCode.SUCCESS);
+        this.success = (code == ResponseCode.SUCCESS);
     }
 
-    public BaseResponse(String message, ResultCode code) {
+    public BaseResponse(String message, ResponseCode code) {
         this.message = message;
         this.code = code;
-        this.success = (code == ResultCode.SUCCESS);
+        this.success = (code == ResponseCode.SUCCESS);
     }
 
-    public BaseResponse(boolean success, String message, ResultCode code) {
+    public BaseResponse(boolean success, String message, ResponseCode code) {
         this.message = message;
         this.code = code;
         this.success = success;
@@ -41,18 +41,18 @@ public class BaseResponse {
 
 
     public static BaseResponse success() {
-        return new BaseResponse(true, "ok", ResultCode.SUCCESS);
+        return new BaseResponse(true, "ok", ResponseCode.SUCCESS);
     }
 
     public static BaseResponse success(String message) {
-        return new BaseResponse(true, message, ResultCode.SUCCESS);
+        return new BaseResponse(true, message, ResponseCode.SUCCESS);
     }
 
     public static BaseResponse failed(String message) {
-        return new BaseResponse(false, message, ResultCode.APP_BIZ_ERROR);
+        return new BaseResponse(false, message, ResponseCode.APP_BIZ_ERROR);
     }
 
-    public static BaseResponse failed(String message, ResultCode code) {
+    public static BaseResponse failed(String message, ResponseCode code) {
         return new BaseResponse(false, message, code);
     }
 

@@ -16,7 +16,7 @@ public class ViewResponse <T> {
     private String message = "";
 
     @JsonDeserialize(using = ResultCodeDeserializer.class)
-    private ResultCode code = ResultCode.SUCCESS;
+    private ResponseCode code = ResponseCode.SUCCESS;
 
     private boolean success = true;
 
@@ -31,22 +31,22 @@ public class ViewResponse <T> {
     }
 
     public static ViewResponse<Void> failed(String message){
-        return response(false, ResultCode.APP_BIZ_ERROR ,message, null);
+        return response(false, ResponseCode.APP_BIZ_ERROR ,message, null);
     }
 
-    public static ViewResponse<Void> failed(ResultCode code, String message) {
+    public static ViewResponse<Void> failed(ResponseCode code, String message) {
         return response(code, message, null);
     }
 
     public static <T> ViewResponse<T> response(boolean success, String message, T view) {
-        return response(success, ResultCode.SUCCESS, message, view);
+        return response(success, ResponseCode.SUCCESS, message, view);
     }
 
-    public static <T> ViewResponse<T> response(ResultCode resultCode, String message, T view) {
-        return response(Objects.equals(resultCode, ResultCode.SUCCESS), resultCode, message, view);
+    public static <T> ViewResponse<T> response(ResponseCode resultCode, String message, T view) {
+        return response(Objects.equals(resultCode, ResponseCode.SUCCESS), resultCode, message, view);
     }
 
-    public static <T> ViewResponse<T> response(boolean success, ResultCode resultCode, String message, T view) {
+    public static <T> ViewResponse<T> response(boolean success, ResponseCode resultCode, String message, T view) {
         ViewResponse<T> viewResponse = new ViewResponse<>();
         viewResponse.setSuccess(success);
         viewResponse.setCode(resultCode);
@@ -58,7 +58,7 @@ public class ViewResponse <T> {
     public static <T> ViewResponse<T> response(ServiceResult<T> serviceResult) {
         ViewResponse<T> viewResponse = new ViewResponse<>();
         viewResponse.setSuccess(serviceResult.isSuccess());
-        viewResponse.setCode(serviceResult.isSuccess()? ResultCode.SUCCESS : ResultCode.APP_BIZ_ERROR);
+        viewResponse.setCode(serviceResult.isSuccess()? ResponseCode.SUCCESS : ResponseCode.APP_BIZ_ERROR);
         viewResponse.setMessage(serviceResult.getErrorMsg());
         viewResponse.setView(serviceResult.getReturnValue());
         return viewResponse;
