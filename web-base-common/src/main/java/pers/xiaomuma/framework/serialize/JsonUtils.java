@@ -84,22 +84,31 @@ public class JsonUtils {
     /**
      * 将 json 字段串转换为 List.
      */
-    public static <T> List<T> json2List(String json, Class<T> clazz) throws IOException {
+    public static <T> List<T> json2List(String json, Class<T> clazz) {
         JavaType type = OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
-
-        return OBJECT_MAPPER.readValue(json, type);
+        try {
+            return OBJECT_MAPPER.readValue(json, type);
+        } catch (IOException e) {
+            throw new RuntimeException("将 Json 转换为List时异常,数据是:" + json, e);
+        }
     }
 
-    public static <T> Set<T> json2Set(String json, Class<T> clazz) throws IOException {
+    public static <T> Set<T> json2Set(String json, Class<T> clazz) {
         JavaType type = OBJECT_MAPPER.getTypeFactory().constructCollectionType(Set.class, clazz);
-
-        return OBJECT_MAPPER.readValue(json, type);
+        try {
+            return OBJECT_MAPPER.readValue(json, type);
+        } catch (IOException e) {
+            throw new RuntimeException("将 Json 转换为Set时异常,数据是:" + json, e);
+        }
     }
 
-    public static <K,V> Map<K,V> json2Map(String json,  Class<K> keyClazz,Class<V> valueClazz) throws IOException {
+    public static <K, V> Map<K, V> json2Map(String json, Class<K> keyClazz, Class<V> valueClazz) {
         JavaType type = OBJECT_MAPPER.getTypeFactory().constructMapType(Map.class, keyClazz, valueClazz);
-
-        return OBJECT_MAPPER.readValue(json, type);
+        try {
+            return OBJECT_MAPPER.readValue(json, type);
+        } catch (IOException e) {
+            throw new RuntimeException("将 Json 转换为Map时异常,数据是:" + json, e);
+        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -170,8 +179,6 @@ public class JsonUtils {
             }
         }
     }
-
-
 
 
 }
