@@ -20,6 +20,7 @@
         <module>web-base-rpc</module>
         <module>web-base-api</module>
         <module>web-base-security</module>
+        <module>web-base-thirdparty</module>
     </modules>
     <packaging>pom</packaging>
 

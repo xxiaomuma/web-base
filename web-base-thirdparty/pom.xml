@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>web-base</artifactId>
+        <groupId>pers.xiaomuma.web</groupId>
+        <version>2.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>web-base-thirdparty</artifactId>
+
+    <properties>
+        <!-- 阿里云短信 -->
+        <sms.aliyun.sdk.version>4.5.1</sms.aliyun.sdk.version>
+        <sms.aliyun.dysmsapi.version>1.1.0</sms.aliyun.dysmsapi.version>
+        <!-- oss存储 -->
+        <minio.version>7.1.4</minio.version>
+        <qiniu.sdk.version>7.2.11</qiniu.sdk.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>pers.xiaomuma.web</groupId>
+            <artifactId>web-base-common</artifactId>
+            <version>2.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+            <version>${sms.aliyun.dysmsapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>${sms.aliyun.sdk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>${qiniu.sdk.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
+        </dependency>
+    </dependencies>
+</project>
