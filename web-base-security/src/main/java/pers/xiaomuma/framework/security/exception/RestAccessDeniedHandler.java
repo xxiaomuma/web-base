@@ -27,7 +27,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException var) throws IOException, ServletException {
-        this.logger.error("Handle Access Denied", var);
+        this.logger.error("Handle Access Denied");
         if (!response.isCommitted()) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setCharacterEncoding("utf-8");

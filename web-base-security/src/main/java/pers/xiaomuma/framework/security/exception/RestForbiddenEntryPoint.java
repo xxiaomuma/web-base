@@ -27,7 +27,7 @@ public class RestForbiddenEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException var) throws IOException, ServletException {
-        this.logger.error("Handle Forbidden", var);
+        this.logger.error("Handle Forbidden");
         if (!response.isCommitted()) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.setCharacterEncoding("utf-8");
