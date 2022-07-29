@@ -10,7 +10,6 @@ import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.RsaSigner;
 import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 import pers.xiaomuma.framework.serialize.JsonUtils;
-import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyStore;
@@ -91,11 +90,7 @@ public class JwtTokenGenerator {
         } catch (Exception var8) {
             throw new BadCredentialsException(var8.getMessage());
         }
-        Map<String, String> claimsMap = Maps.newHashMap();
-        try {
-            claimsMap = JsonUtils.json2Map(jwt.getClaims(), String.class, String.class);
-        } catch (IOException ignored) {
-        }
+        Map<String, String> claimsMap =  JsonUtils.json2Map(jwt.getClaims(), String.class, String.class);
         String iss = claimsMap.get("iss");
         if (StrUtil.equals(iss, this.properties.getJwtIss())) {
             LocalDateTime exp = LocalDateTime.parse(claimsMap.get("exp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME);

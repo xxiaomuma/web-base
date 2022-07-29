@@ -62,6 +62,6 @@ public class AliTransactionRequestManager implements AliTransactionRequest {
 
     private AlipayClient buildDefaultAlipayClient() {
         String requestAddress = AliTransactionUrlBuilder.build();
-        return new DefaultAlipayClient(requestAddress, properties.getAppId(), properties.getPrivateKey(), "json", "utf-8", properties.getPublicKey(), "RSA2");
+        return new DefaultAlipayClient(requestAddress, properties.getAppId(), properties.getPrivateKey(), "json", "utf-8", properties.getPublicKey(), "RSA");
     }
 }

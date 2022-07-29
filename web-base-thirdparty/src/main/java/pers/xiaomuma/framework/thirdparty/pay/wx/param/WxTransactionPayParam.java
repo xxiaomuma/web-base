@@ -80,7 +80,7 @@ public class WxTransactionPayParam {
 
     private final static BigDecimal ONE_HUNDRED_DECIMAL = new BigDecimal("100");
 
-    private static class PayAmount {
+    public static class PayAmount {
 
         /**
          * 订单总金额，单位为分。(必填)
@@ -109,7 +109,7 @@ public class WxTransactionPayParam {
         }
     }
 
-    private static class Payer {
+    public static class Payer {
 
         /**
          * 用户标识,openid(必填)

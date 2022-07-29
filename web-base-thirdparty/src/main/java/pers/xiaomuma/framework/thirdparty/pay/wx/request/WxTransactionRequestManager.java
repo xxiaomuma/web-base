@@ -115,7 +115,7 @@ public class WxTransactionRequestManager implements WxTransactionRequest {
         String requestAddress = WxTransactionUrlBuilder.transactionQueryUrl()
                 .mchId(properties.getMerchantId())
                 .outTradeNo(outTradeNo)
-                .buildIdQuery();
+                .buildOutTradeNoQuery();
         HttpUrl url = HttpUrl.parse(requestAddress);
         HttpHeaders header = this.buildAuthorizationHeader(HttpMethod.GET, url, "");
         HttpEntity<String> httpEntity = new HttpEntity<>(header);
@@ -124,7 +124,7 @@ public class WxTransactionRequestManager implements WxTransactionRequest {
 
     private void setPayDefaultValue(WxTransactionPayParam param) {
         param.setAppId(properties.getAppId());
-        param.setAppId(properties.getMerchantId());
+        param.setMchId(properties.getMerchantId());
         if (StrUtil.isEmpty(param.getNotifyUrl())) {
             param.setNotifyUrl(properties.getNotifyUrl());
         }
