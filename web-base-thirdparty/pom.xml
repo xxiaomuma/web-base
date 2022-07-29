@@ -17,6 +17,8 @@
         <!-- oss存储 -->
         <minio.version>7.1.4</minio.version>
         <qiniu.sdk.version>7.2.11</qiniu.sdk.version>
+        <!-- 支付宝SDK -->
+        <alipay.version>4.31.72.ALL</alipay.version>
     </properties>
 
     <dependencies>
@@ -49,6 +51,11 @@
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
             <version>${sms.aliyun.sdk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>${alipay.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qiniu</groupId>
