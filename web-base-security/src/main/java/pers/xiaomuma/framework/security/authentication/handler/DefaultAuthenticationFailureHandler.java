@@ -2,6 +2,7 @@ package pers.xiaomuma.framework.security.authentication.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import pers.xiaomuma.framework.response.ResponseCode;
@@ -20,12 +21,16 @@ public class DefaultAuthenticationFailureHandler implements AuthenticationFailur
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        logger.debug("AuthenticationFailure", e);
+        this.logger.debug("AuthenticationFailure");
         if (response.isCommitted()) {
-            logger.debug("Response has already been committed");
+            this.logger.debug("Response has already been committed");
         } else {
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(JsonUtils.object2Json(ViewResponse.failed(ResponseCode.UN_AUTHORIZED, "")));
+            if (e instanceof BadCredentialsException) {
+                response.getWriter().write(JsonUtils.object2Json(ViewResponse.failed(ResponseCode.EXPIRED_AUTHORIZE, e.getMessage())));
+            } else {
+                response.getWriter().write(JsonUtils.object2Json(ViewResponse.failed(ResponseCode.EXPIRED_AUTHORIZE, "")));
+            }
         }
 
     }

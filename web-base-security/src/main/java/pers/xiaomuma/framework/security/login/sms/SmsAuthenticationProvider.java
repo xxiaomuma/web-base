@@ -10,18 +10,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import pers.xiaomuma.framework.security.login.DefaultAuthenticationChecker;
 import pers.xiaomuma.framework.security.login.DefaultUserDetailsService;
+import pers.xiaomuma.framework.security.login.DefaultValidateCodeService;
 
 
 public class SmsAuthenticationProvider implements AuthenticationProvider {
 
     private final Logger logger = LoggerFactory.getLogger(SmsAuthenticationProvider.class);
     private DefaultUserDetailsService userDetailsService;
-    private DefaultSmsUserLoginChecker userLoginChecker;
+    private DefaultValidateCodeService validateCodeService;
     private UserDetailsChecker userDetailsChecker = new DefaultAuthenticationChecker();
 
-    public SmsAuthenticationProvider(DefaultUserDetailsService userDetailsService, DefaultSmsUserLoginChecker userLoginChecker) {
+    public SmsAuthenticationProvider(DefaultUserDetailsService userDetailsService, DefaultValidateCodeService validateCodeService) {
         this.userDetailsService = userDetailsService;
-        this.userLoginChecker = userLoginChecker;
+        this.validateCodeService = validateCodeService;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
         if (StrUtil.isBlank(code)) {
             throw new BadCredentialsException("验证码为空");
         }
-        if (userLoginChecker.check(mobile, code)) {
+        if (validateCodeService.validateSmsCode(mobile, code)) {
             UserDetails userDetails = userDetailsService.loadUserByMobile(mobile);
             userDetailsChecker.check(userDetails);
             return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
