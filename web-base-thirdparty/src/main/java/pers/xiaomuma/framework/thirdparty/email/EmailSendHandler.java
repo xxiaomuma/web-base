@@ -3,7 +3,6 @@ package pers.xiaomuma.framework.thirdparty.email;
 
 public interface EmailSendHandler {
 
-    EmailResult syncSend(EmailParam emailDetails);
+    EmailResult send(EmailParam param);
 
-    void asyncSend(EmailParam emailDetails);
 }
