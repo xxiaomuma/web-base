@@ -9,7 +9,7 @@ public class AliYunValidateProperties {
 
     private String signName;
 
-    private String codeTemplate;
+    private String defaultCodeTemplate;
 
     public String getAppKey() {
         return appKey;
@@ -35,11 +35,11 @@ public class AliYunValidateProperties {
         this.signName = signName;
     }
 
-    public String getCodeTemplate() {
-        return codeTemplate;
+    public String getDefaultCodeTemplate() {
+        return defaultCodeTemplate;
     }
 
-    public void setCodeTemplate(String codeTemplate) {
-        this.codeTemplate = codeTemplate;
+    public void setDefaultCodeTemplate(String defaultCodeTemplate) {
+        this.defaultCodeTemplate = defaultCodeTemplate;
     }
 }

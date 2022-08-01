@@ -17,16 +17,16 @@ public abstract class AbstractValidateCodeSender implements ValidateCodeAdapter 
     }
 
     @Override
-    public String send(String mobile) {
+    public String send(ValidateCodeParam param) {
         String code = "888888";
         if (!simulate) {
             code = RandomUtil.randomNumbers(codeLength);
-            doSend(mobile, code);
+            doSend(param, code);
         }
         return code;
     }
 
-    abstract public void doSend(String mobile, String code);
+    abstract public void doSend(ValidateCodeParam param, String code);
 
     public int getCodeLength() {
         return codeLength;
