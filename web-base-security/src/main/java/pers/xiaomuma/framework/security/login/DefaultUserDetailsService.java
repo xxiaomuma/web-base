@@ -10,6 +10,10 @@ public interface DefaultUserDetailsService {
         throw new BadCredentialsException("缺失mobile登录服务");
     }
 
+    default UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        throw new BadCredentialsException("缺失email登录服务");
+    }
+
     default UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         throw new BadCredentialsException("缺失username登录服务");
     }
