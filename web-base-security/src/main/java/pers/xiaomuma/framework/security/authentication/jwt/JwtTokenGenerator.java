@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
@@ -95,7 +96,7 @@ public class JwtTokenGenerator {
         if (StrUtil.equals(iss, this.properties.getJwtIss())) {
             LocalDateTime exp = LocalDateTime.parse(claimsMap.get("exp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             if (exp.isBefore(LocalDateTime.now())) {
-                throw new BadCredentialsException("token expired");
+                throw new CredentialsExpiredException("token expired");
             } else {
                 return claimsMap;
             }

@@ -23,6 +23,7 @@ public enum ResponseCode {
     INTERNAL_SERVER_ERROR(HttpResponseCode.SC_INTERNAL_SERVER_ERROR, "服务器错误"),
     APP_BIZ_ERROR(601, "普通业务异常"),
     EXPIRED_AUTHORIZE(701, "认证失效"),
+    DENIED_AUTHORIZE(701, "权限不足"),
     PARAM_IS_VALID(901, "参数无效"),
     PARAM_IS_BLANK(902, "参数为空"),
     PARAM_TYPE_BIND_ERROR(903, "参数类型错误"),
