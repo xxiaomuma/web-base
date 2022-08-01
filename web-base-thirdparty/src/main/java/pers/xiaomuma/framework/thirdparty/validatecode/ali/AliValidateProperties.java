@@ -1,7 +1,7 @@
-package pers.xiaomuma.framework.thirdparty.validatecode.aliyun;
+package pers.xiaomuma.framework.thirdparty.validatecode.ali;
 
 
-public class AliYunValidateProperties {
+public class AliValidateProperties {
 
     private String appKey;
 

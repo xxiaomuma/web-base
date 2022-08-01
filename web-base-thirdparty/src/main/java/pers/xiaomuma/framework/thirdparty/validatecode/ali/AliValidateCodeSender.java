@@ -1,4 +1,4 @@
-package pers.xiaomuma.framework.thirdparty.validatecode.aliyun;
+package pers.xiaomuma.framework.thirdparty.validatecode.ali;
 
 import cn.hutool.core.util.StrUtil;
 import com.aliyuncs.DefaultAcsClient;
@@ -16,17 +16,17 @@ import pers.xiaomuma.framework.thirdparty.validatecode.ValidateCodeParam;
 import java.util.concurrent.ExecutorService;
 
 
-public class AliYunValidateCodeSender extends AbstractValidateCodeSender {
+public class AliValidateCodeSender extends AbstractValidateCodeSender {
 
-    private final Logger logger = LoggerFactory.getLogger(AliYunValidateCodeSender.class);
+    private final Logger logger = LoggerFactory.getLogger(AliValidateCodeSender.class);
     private IAcsClient acsClient;
-    private AliYunValidateProperties properties;
+    private AliValidateProperties properties;
     private ExecutorService customizedThreadPool;
     private static final String REGION_ID = "cn-hangzhou";
     private static final String PRODUCT = "Dysmsapi";
     private static final String DOMAIN = "dysmsapi.aliyuncs.com";
 
-    public AliYunValidateCodeSender(boolean simulate, AliYunValidateProperties properties, ExecutorService customizedThreadPool) throws ClientException {
+    public AliValidateCodeSender(boolean simulate, AliValidateProperties properties, ExecutorService customizedThreadPool) throws ClientException {
         this.properties = properties;
         this.customizedThreadPool = customizedThreadPool;
         String appKey = properties.getAppKey();
@@ -46,8 +46,8 @@ public class AliYunValidateCodeSender extends AbstractValidateCodeSender {
     }
 
     private void processSendCode(ValidateCodeParam param, String code) {
-        String mobile = ((AliYunValidateCodeParam) param).getMobile();
-        String codeTemplate = ((AliYunValidateCodeParam) param).getCodeTemplate();
+        String mobile = ((AliValidateCodeParam) param).getMobile();
+        String codeTemplate = ((AliValidateCodeParam) param).getCodeTemplate();
         if (StrUtil.isBlank(codeTemplate)) {
             codeTemplate = this.properties.getDefaultCodeTemplate();
         }

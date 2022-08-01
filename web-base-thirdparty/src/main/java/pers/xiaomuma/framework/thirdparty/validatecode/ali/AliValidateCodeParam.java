@@ -1,8 +1,8 @@
-package pers.xiaomuma.framework.thirdparty.validatecode.aliyun;
+package pers.xiaomuma.framework.thirdparty.validatecode.ali;
 
 import pers.xiaomuma.framework.thirdparty.validatecode.ValidateCodeParam;
 
-public class AliYunValidateCodeParam implements ValidateCodeParam {
+public class AliValidateCodeParam implements ValidateCodeParam {
 
     private String mobile;
 
