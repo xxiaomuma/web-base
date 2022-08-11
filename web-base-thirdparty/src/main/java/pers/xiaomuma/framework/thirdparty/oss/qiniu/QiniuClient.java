@@ -10,6 +10,7 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import pers.xiaomuma.framework.exception.InternalServerErrorException;
 import pers.xiaomuma.framework.serialize.JsonUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -57,6 +58,16 @@ public class QiniuClient {
 
     public InputStream fetchInputStream(String bucket, String filename) {
         throw new InternalServerErrorException("暂不支持七牛云文件下载");
+    }
+
+    public boolean expire(String bucket, String filename, int day) {
+        Response response;
+        try {
+            response = bucketManager.deleteAfterDays(bucket, filename, day);
+        } catch (QiniuException var) {
+            throw new InternalServerErrorException("设置七牛云文件过期时间失败", var);
+        }
+        return response.isOK();
     }
 
 }

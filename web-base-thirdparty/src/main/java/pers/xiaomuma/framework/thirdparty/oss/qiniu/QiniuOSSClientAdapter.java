@@ -30,4 +30,9 @@ public class QiniuOSSClientAdapter implements OSSClientAdapter {
     public InputStream fetchInputStream(String bucket, String filename) {
         return qiniuClient.fetchInputStream(bucket, filename);
     }
+
+    @Override
+    public boolean expire(String bucket, String filename, int day) {
+        return qiniuClient.expire(bucket, filename, day);
+    }
 }

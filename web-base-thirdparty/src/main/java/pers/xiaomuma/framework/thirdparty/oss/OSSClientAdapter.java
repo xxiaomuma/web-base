@@ -11,4 +11,6 @@ public interface OSSClientAdapter {
 
     InputStream fetchInputStream(String bucket, String filename);
 
+    boolean expire(String bucket, String filename, int day);
+
 }

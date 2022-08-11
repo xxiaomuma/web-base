@@ -2,6 +2,7 @@ package pers.xiaomuma.framework.thirdparty.oss.minio;
 
 import io.minio.*;
 import lombok.SneakyThrows;
+import pers.xiaomuma.framework.exception.InternalServerErrorException;
 import pers.xiaomuma.framework.thirdparty.oss.OSSClientAdapter;
 import pers.xiaomuma.framework.thirdparty.oss.OSSProperties;
 import java.io.InputStream;
@@ -49,5 +50,10 @@ public class MinioOSSClientAdapter implements OSSClientAdapter {
                 .object(filename)
                 .build();
         return minioClient.getObject(args);
+    }
+
+    @Override
+    public boolean expire(String bucket, String filename, int day) {
+        throw new InternalServerErrorException("暂不支持设置minio过期时间");
     }
 }
