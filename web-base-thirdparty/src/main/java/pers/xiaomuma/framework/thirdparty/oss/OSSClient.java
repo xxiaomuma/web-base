@@ -44,6 +44,10 @@ public class OSSClient {
         return clientAdapter.fetchInputStream(bucket, filename);
     }
 
+    public boolean expire(String filename, int day) {
+        return clientAdapter.expire(clientConfig.getDefaultBucket(), filename, day);
+    }
+
     public boolean expire(String bucket, String filename, int day) {
         return clientAdapter.expire(bucket, filename, day);
     }
