@@ -32,7 +32,7 @@ public class AliTransactionRequestManager implements AliTransactionRequest {
         request.setReturnUrl("");
         request.setNotifyUrl(properties.getNotifyUrl());
         request.setBizContent(param.parse2BizContentRequestBody());
-        return alipayClient.execute(request);
+        return alipayClient.pageExecute(request);
     }
 
     @Override
