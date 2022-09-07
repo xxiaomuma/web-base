@@ -1,6 +1,7 @@
 package pers.xiaomuma.framework.thirdparty.pay.ali.request;
 
 import com.alipay.api.AlipayApiException;
+import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.alipay.api.response.AlipayTradeRefundResponse;
@@ -8,6 +9,8 @@ import pers.xiaomuma.framework.thirdparty.pay.ali.param.AliTransactionPayParam;
 import pers.xiaomuma.framework.thirdparty.pay.ali.param.AliTransactionRefundParam;
 
 public interface AliTransactionRequest {
+
+    AlipayTradePagePayResponse transactionPayPage(AliTransactionPayParam param) throws AlipayApiException;
 
     AlipayTradePrecreateResponse transactionPayNative(AliTransactionPayParam param) throws AlipayApiException;
 

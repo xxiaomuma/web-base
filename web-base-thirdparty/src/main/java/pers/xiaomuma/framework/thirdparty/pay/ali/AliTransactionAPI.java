@@ -1,6 +1,7 @@
 package pers.xiaomuma.framework.thirdparty.pay.ali;
 
 import com.alipay.api.AlipayApiException;
+import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.alipay.api.response.AlipayTradeRefundResponse;
@@ -23,6 +24,19 @@ public class AliTransactionAPI {
         this.transactionRequest = new AliTransactionRequestManager(properties);
     }
 
+    public TransactionResult<String> transactionPayPage(AliTransactionPayParam param) {
+        AlipayTradePagePayResponse response = null;
+        try {
+            response = transactionRequest.transactionPayPage(param);
+            if (response.isSuccess()) {
+                return TransactionResult.success(response.getBody());
+            }
+        } catch (AlipayApiException e) {
+            return TransactionResult.error("支付宝电脑网站支付Api异常, error:" + e.getMessage());
+        }
+        return TransactionResult.error(response.getMsg());
+    }
+
     public TransactionResult<String> transactionPayNative(AliTransactionPayParam param) {
         AlipayTradePrecreateResponse response = null;
         try {
@@ -31,7 +45,7 @@ public class AliTransactionAPI {
                 return TransactionResult.success(response.getQrCode());
             }
         } catch (AlipayApiException e) {
-            return TransactionResult.error("支付宝扫码支付Api异常, error:" + e.getMessage());
+            return TransactionResult.error("支付宝当面付Api异常, error:" + e.getMessage());
         }
         return TransactionResult.error(response.getMsg());
     }
