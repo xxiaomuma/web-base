@@ -3,7 +3,6 @@ package pers.xiaomuma.framework.thirdparty.utils;
 import cn.hutool.core.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +24,7 @@ public class WxPayUtils {
 	}
 
 	public static PrivateKey getPrivateKey(String filename) {
-		String content = getPrivateContent(filename);
+		String content = FileUtils.getFileContent(filename);
 		try {
 			String privateKey = content
 					.replace("-----BEGIN PRIVATE KEY-----", "")
@@ -59,32 +58,6 @@ public class WxPayUtils {
 		} catch (CertificateException e) {
 			throw new RuntimeException("无效的证书文件", e);
 		}
-	}
-
-	private static String getPrivateContent(String filename) {
-		InputStream inputStream = WxPayUtils.class.getClassLoader()
-				.getResourceAsStream(filename);
-		if (Objects.isNull(inputStream)) {
-			LOGGER.info("获取{}失败", filename);
-			return "";
-		}
-		StringBuilder sbf = new StringBuilder();
-		try {
-			int length;
-			byte[] bytes = new byte[1024];
-			while((length = inputStream.read(bytes)) != -1){
-				sbf.append(new String(bytes, 0, length));
-			}
-		} catch (IOException e) {
-			throw new RuntimeException("读取文件失败", e);
-		} finally {
-			try {
-				inputStream.close();
-			} catch (IOException e1) {
-				LOGGER.error("关闭 inputStream 失败, {}", e1.getMessage());
-			}
-		}
-		return sbf.toString();
 	}
 
 }
