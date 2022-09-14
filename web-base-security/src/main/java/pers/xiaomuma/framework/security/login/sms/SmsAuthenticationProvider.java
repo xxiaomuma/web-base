@@ -9,8 +9,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import pers.xiaomuma.framework.security.login.DefaultAuthenticationChecker;
+import pers.xiaomuma.framework.security.login.DefaultAuthenticationPostProcessor;
 import pers.xiaomuma.framework.security.login.DefaultUserDetailsService;
 import pers.xiaomuma.framework.security.login.DefaultValidateCodeService;
+import java.util.Objects;
 
 
 public class SmsAuthenticationProvider implements AuthenticationProvider {
@@ -18,11 +20,18 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
     private final Logger logger = LoggerFactory.getLogger(SmsAuthenticationProvider.class);
     private DefaultUserDetailsService userDetailsService;
     private DefaultValidateCodeService validateCodeService;
+    private DefaultAuthenticationPostProcessor defaultAuthenticationPostProcessor;
     private UserDetailsChecker userDetailsChecker = new DefaultAuthenticationChecker();
 
     public SmsAuthenticationProvider(DefaultUserDetailsService userDetailsService, DefaultValidateCodeService validateCodeService) {
         this.userDetailsService = userDetailsService;
         this.validateCodeService = validateCodeService;
+    }
+
+    public SmsAuthenticationProvider(DefaultUserDetailsService userDetailsService, DefaultValidateCodeService validateCodeService, DefaultAuthenticationPostProcessor defaultAuthenticationPostProcessor) {
+        this.userDetailsService = userDetailsService;
+        this.validateCodeService = validateCodeService;
+        this.defaultAuthenticationPostProcessor = defaultAuthenticationPostProcessor;
     }
 
     @Override
@@ -36,13 +45,21 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
         if (StrUtil.isBlank(code)) {
             throw new BadCredentialsException("验证码为空");
         }
-        if (validateCodeService.validateSmsCode(mobile, code)) {
-            UserDetails userDetails = userDetailsService.loadUserByMobile(mobile);
-            userDetailsChecker.check(userDetails);
-            return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        if (Objects.nonNull(defaultAuthenticationPostProcessor)) {
+            defaultAuthenticationPostProcessor.postProcessBeforeAuthentication(authenticationToken);
         }
-        logger.debug("手机验证码不匹配: mobile:[{}], code:[{}]", mobile, code);
-        throw new BadCredentialsException("手机验证码不匹配");
+
+        if (!validateCodeService.validateSmsCode(mobile, code)) {
+            logger.debug("手机验证码不匹配: mobile:[{}], code:[{}]", mobile, code);
+            throw new BadCredentialsException("手机验证码不匹配");
+        }
+        UserDetails userDetails = userDetailsService.loadUserByMobile(mobile);
+        userDetailsChecker.check(userDetails);
+
+        if (Objects.nonNull(defaultAuthenticationPostProcessor)) {
+            defaultAuthenticationPostProcessor.postProcessAfterAuthentication(userDetails);
+        }
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
     @Override
