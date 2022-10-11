@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
@@ -14,14 +14,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 import java.time.Duration;
 import java.util.Objects;
 
 
 @Configuration
 @EnableConfigurationProperties({RedisProperties.class})
-//@Import(LettuceConnectionFactory.class)
 public class RedisConfiguration {
 
     @Bean
@@ -30,7 +28,7 @@ public class RedisConfiguration {
         configuration.setDatabase(redisProperties.getDatabase());
         configuration.setHostName(redisProperties.getHost());
         configuration.setPort(redisProperties.getPort());
-        configuration.setPassword(redisProperties.getPassword());
+        configuration.setPassword(RedisPassword.of(redisProperties.getPassword()));
         RedisProperties.Pool pool = Objects.isNull(redisProperties.getLettuce().getPool()) ? new RedisProperties.Pool() : redisProperties.getLettuce().getPool();
         GenericObjectPoolConfig<?> poolConfig = new GenericObjectPoolConfig<>();
         poolConfig.setMaxIdle(pool.getMaxIdle());
