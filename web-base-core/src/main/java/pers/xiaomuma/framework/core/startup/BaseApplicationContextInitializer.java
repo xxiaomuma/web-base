@@ -38,7 +38,7 @@ public class BaseApplicationContextInitializer implements SpringApplicationRunLi
         Properties p = new Properties();
         // 允许覆盖原有的bean
         p.put("spring.main.allow-bean-definition-overriding", "true");
-        m.addFirst(new PropertiesPropertySource("yxBaseProperties", p));//d
+        m.addFirst(new PropertiesPropertySource("baseProperties", p));//d
     }
 
     @Override

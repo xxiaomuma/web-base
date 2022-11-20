@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class MybatisPlusGeneratorTemplate {
 
-	private static final String OUTPUT_DIR = "/Users/elliot/";
+	private static final String OUTPUT_DIR = "";
 
-	private static final String DATASOURCE_NAME = "yx-external-user.write";
+	private static final String DATASOURCE_NAME = "test.write";
 
-	private static final String PACKAGE_PARENT = "com.yxbl.ms.user";
+	private static final String PACKAGE_PARENT = "pers.xiaomuma.base";
 
 	private static final String PACKAGE_MODEL = "core";
 
@@ -85,9 +85,6 @@ public class MybatisPlusGeneratorTemplate {
 		strategy.setControllerMappingHyphenStyle(true);
 		strategy.setInclude(new String[] {
 				"account",
-				"role",
-				"user_role_relation",
-				"delivery_address"
 		}); // 需要生成的表
 		mpg.setStrategy(strategy);
 		mpg.setTemplateEngine(new VelocityTemplateEngine());
