@@ -4,20 +4,25 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import pers.xiaomuma.framework.thirdparty.email.ThymeleafBody;
+
 import java.util.Map;
 
 
 public class ThymeleafBodyRenderer implements EmailBodyRenderer {
 
-    private static SpringTemplateEngine defaultTemplateEngine;
+    private final SpringTemplateEngine springTemplateEngine;
 
-    static {
+    public ThymeleafBodyRenderer() {
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
         resolver.setTemplateMode("HTML5");
         resolver.setCharacterEncoding("utf-8");
         SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
         springTemplateEngine.addTemplateResolver(resolver);
-        defaultTemplateEngine = springTemplateEngine;
+        this.springTemplateEngine = springTemplateEngine;
+    }
+
+    public ThymeleafBodyRenderer(SpringTemplateEngine springTemplateEngine) {
+        this.springTemplateEngine = springTemplateEngine;
     }
 
     @Override
@@ -26,10 +31,10 @@ public class ThymeleafBodyRenderer implements EmailBodyRenderer {
         String templateName = thymeleafBody.getTemplateName();
         Map<String, Object> contentMap = thymeleafBody.getContentVarMap();
         Context context = new Context();
-        for(Map.Entry<String, Object> entry : contentMap.entrySet()) {
+        for (Map.Entry<String, Object> entry : contentMap.entrySet()) {
             context.setVariable(entry.getKey(), entry.getValue());
         }
-        return defaultTemplateEngine.process(templateName, context);
+        return springTemplateEngine.process(templateName, context);
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import pers.xiaomuma.framework.serialize.JsonUtils;
 import pers.xiaomuma.framework.thirdparty.email.render.CompositeEmailRender;
 import pers.xiaomuma.framework.thirdparty.email.render.EmailBodyType;
@@ -31,6 +32,12 @@ public class JavaMailSendHandler implements EmailSendHandler {
         this.properties = properties;
         this.javaMailSender = initializeSender(properties);
         this.compositeEmailRender = new CompositeEmailRender();
+    }
+
+    public JavaMailSendHandler(EmailProperties properties, SpringTemplateEngine springTemplateEngine) {
+        this.properties = properties;
+        this.javaMailSender = initializeSender(properties);
+        this.compositeEmailRender = new CompositeEmailRender(springTemplateEngine);
     }
 
     public JavaMailSender initializeSender(EmailProperties properties) {
