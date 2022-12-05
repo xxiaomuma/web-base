@@ -19,9 +19,9 @@ import java.util.concurrent.ExecutorService;
 public class AliValidateCodeSender extends AbstractValidateCodeSender {
 
     private final Logger logger = LoggerFactory.getLogger(AliValidateCodeSender.class);
-    private IAcsClient acsClient;
-    private AliValidateProperties properties;
-    private ExecutorService customizedThreadPool;
+    private final IAcsClient acsClient;
+    private final AliValidateProperties properties;
+    private final ExecutorService customizedThreadPool;
     private static final String REGION_ID = "cn-hangzhou";
     private static final String PRODUCT = "Dysmsapi";
     private static final String DOMAIN = "dysmsapi.aliyuncs.com";

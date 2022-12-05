@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 public class MinioOSSClientAdapter implements OSSClientAdapter {
 
-    private MinioClient minioClient;
+    private final MinioClient minioClient;
 
     public MinioOSSClientAdapter(OSSProperties properties) {
         this.minioClient = MinioClient.builder()

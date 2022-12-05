@@ -24,9 +24,9 @@ import java.util.Properties;
 public class JavaMailSendHandler implements EmailSendHandler {
 
     private final Logger logger = LoggerFactory.getLogger(JavaMailSendHandler.class);
-    private EmailProperties properties;
-    private JavaMailSender javaMailSender;
-    private CompositeEmailRender compositeEmailRender;
+    private final EmailProperties properties;
+    private final JavaMailSender javaMailSender;
+    private final CompositeEmailRender compositeEmailRender;
 
     public JavaMailSendHandler(EmailProperties properties) {
         this.properties = properties;

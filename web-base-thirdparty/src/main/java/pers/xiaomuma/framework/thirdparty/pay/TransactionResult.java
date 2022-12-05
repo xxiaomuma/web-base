@@ -2,9 +2,9 @@ package pers.xiaomuma.framework.thirdparty.pay;
 
 public class TransactionResult<T> {
 
-    private boolean success;
-    private String errorMsg;
-    private T data;
+    private final boolean success;
+    private final String errorMsg;
+    private final T data;
 
     public boolean isSuccess() {
         return success;

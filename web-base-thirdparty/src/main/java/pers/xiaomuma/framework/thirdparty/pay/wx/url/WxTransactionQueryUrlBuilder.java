@@ -2,8 +2,8 @@ package pers.xiaomuma.framework.thirdparty.pay.wx.url;
 
 public class WxTransactionQueryUrlBuilder {
 
-    private final static String ID_QUERY_URL = "https://api.mch.weixin.qq.com/v3/pay/transactions/id/%s?mchid=%s";
-    private final static String OUT_TRADE_NO_QUERY_URL = "https://api.mch.weixin.qq.com/v3/pay/transactions/out-trade-no/%s?mchid=%s";
+    private static final String ID_QUERY_URL = "https://api.mch.weixin.qq.com/v3/pay/transactions/id/%s?mchid=%s";
+    private static final String OUT_TRADE_NO_QUERY_URL = "https://api.mch.weixin.qq.com/v3/pay/transactions/out-trade-no/%s?mchid=%s";
 
     private String mchId;
     private String outTradeNo;

@@ -5,8 +5,8 @@ import java.io.InputStream;
 
 public class OSSClient {
 
-    private OSSClientConfig clientConfig;
-    private OSSClientAdapter clientAdapter;
+    private final OSSClientConfig clientConfig;
+    private final OSSClientAdapter clientAdapter;
 
     public OSSClient(OSSClientAdapter clientAdapter) {
         OSSClientConfig clientConfig = new OSSClientConfig();

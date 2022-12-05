@@ -15,8 +15,8 @@ import java.util.concurrent.ExecutorService;
 public class EmailValidateCodeSender extends AbstractValidateCodeSender {
 
     private final Logger logger = LoggerFactory.getLogger(EmailValidateCodeSender.class);
-    private ExecutorService customizedThreadPool;
-    private JavaMailSendHandler javaMailSendHandler;
+    private final ExecutorService customizedThreadPool;
+    private final JavaMailSendHandler javaMailSendHandler;
 
     public EmailValidateCodeSender(boolean simulate, EmailProperties properties, ExecutorService customizedThreadPool) {
         this.customizedThreadPool = customizedThreadPool;

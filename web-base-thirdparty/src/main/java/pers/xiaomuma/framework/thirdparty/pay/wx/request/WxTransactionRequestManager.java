@@ -52,7 +52,7 @@ public class WxTransactionRequestManager implements WxTransactionRequest {
     @Override
     public ResponseEntity<String> transactionPayH5(WxTransactionPayParam param) {
         this.setPayDefaultValue(param);
-        String requestAddress = WxTransactionUrlBuilder.wxTransactionPayH5Url().build();
+        String requestAddress = WxTransactionUrlBuilder.transactionPayH5Url().build();
         String requestBody = param.parse2RequestBody();
         HttpHeaders header = this.buildAuthorizationHeader(HttpMethod.POST, HttpUrl.parse(requestAddress), requestBody);
         HttpEntity<String> httpEntity = new HttpEntity<>(requestBody, header);

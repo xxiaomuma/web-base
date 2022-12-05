@@ -11,8 +11,8 @@ public enum WxPayTransactionType {
     // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_1.shtml
     NATIVE(4, "NATIVE支付");
 
-    private int code;
-    private String desc;
+    private final int code;
+    private final String desc;
 
     WxPayTransactionType(int code, String desc) {
         this.code = code;

@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class QiniuOSSClientAdapter implements OSSClientAdapter {
 
-    private QiniuClient qiniuClient;
+    private final QiniuClient qiniuClient;
 
     public QiniuOSSClientAdapter(OSSProperties properties) {
         this.qiniuClient = new QiniuClient(properties.getAccessKey(), properties.getSecretKey());

@@ -7,11 +7,11 @@ public abstract class AbstractValidateCodeSender implements ValidateCodeAdapter 
     private int codeLength;
     private boolean simulate;
 
-    public AbstractValidateCodeSender() {
+    protected AbstractValidateCodeSender() {
         this(false, 6);
     }
 
-    public AbstractValidateCodeSender(boolean simulate, int codeLength) {
+    protected AbstractValidateCodeSender(boolean simulate, int codeLength) {
         this.simulate = simulate;
         this.codeLength = codeLength;
     }
@@ -26,7 +26,7 @@ public abstract class AbstractValidateCodeSender implements ValidateCodeAdapter 
         return code;
     }
 
-    abstract public void doSend(ValidateCodeParam param, String code);
+    public abstract void doSend(ValidateCodeParam param, String code);
 
     public int getCodeLength() {
         return codeLength;

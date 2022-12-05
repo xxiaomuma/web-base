@@ -19,7 +19,7 @@ import pers.xiaomuma.framework.thirdparty.pay.ali.url.AliTransactionUrlBuilder;
 
 public class AliTransactionRequestManager implements AliTransactionRequest {
 
-    private AliTransactionProperties properties;
+    private final AliTransactionProperties properties;
 
     public AliTransactionRequestManager(AliTransactionProperties properties) {
         this.properties = properties;

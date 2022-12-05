@@ -18,7 +18,7 @@ import java.util.Map;
 public class AliTransactionAPI {
 
     private final Logger logger = LoggerFactory.getLogger(AliTransactionAPI.class);
-    private AliTransactionRequest transactionRequest;
+    private final AliTransactionRequest transactionRequest;
 
     public AliTransactionAPI(AliTransactionProperties properties) {
         this.transactionRequest = new AliTransactionRequestManager(properties);

@@ -6,7 +6,7 @@ public class WxTransactionUrlBuilder {
         return new WxTransactionPayAppUrlBuilder();
     }
 
-    public static WxTransactionPayH5UrlBuilder wxTransactionPayH5Url() {
+    public static WxTransactionPayH5UrlBuilder transactionPayH5Url() {
         return new WxTransactionPayH5UrlBuilder();
     }
 
