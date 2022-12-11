@@ -7,17 +7,22 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ObjectMapperFactory {
 
-	private final static DateTimeFormatter NORMAL_DATE_TIME_FORMATTER;
+	private static final DateTimeFormatter NORMAL_DATE_FORMATTER;
+	private static final DateTimeFormatter NORMAL_DATE_TIME_FORMATTER;
 
 	static  {
+		NORMAL_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		NORMAL_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	}
 
@@ -35,6 +40,9 @@ public class ObjectMapperFactory {
 
 	public static JavaTimeModule customizedJavaTimeModule() {
 		JavaTimeModule javaTimeModule = new JavaTimeModule();
+		javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(NORMAL_DATE_FORMATTER));
+		javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(NORMAL_DATE_FORMATTER));
+
 		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(NORMAL_DATE_TIME_FORMATTER));
 		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(NORMAL_DATE_TIME_FORMATTER));
 		return javaTimeModule;
