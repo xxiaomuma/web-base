@@ -8,21 +8,21 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import io.minio.CreateMultipartUploadResponse;
 import pers.xiaomuma.framework.exception.InternalServerErrorException;
 import pers.xiaomuma.framework.serialize.JsonUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 
 
-public class QiniuClient {
+public class CustomQiniuClient {
 
     private final BucketManager bucketManager;
     private final UploadManager uploadManager;
     private final Auth auth;
     private static final Configuration configuration = new Configuration(Zone.autoZone());
 
-    public QiniuClient(String accessKey, String secretKey) {
+    public CustomQiniuClient(String accessKey, String secretKey) {
         this.auth = Auth.create(accessKey, secretKey);
         this.uploadManager = new UploadManager(configuration);
         this.bucketManager = new BucketManager(this.auth, configuration);
@@ -34,8 +34,8 @@ public class QiniuClient {
             Response response = uploadManager.put(is, filename, upToken, null, null);
             DefaultPutRet putRet = JsonUtils.json2Object(response.bodyString(), DefaultPutRet.class);
             return putRet.key;
-        } catch (QiniuException var1) {
-            throw new InternalServerErrorException("上传七牛云失败", var1);
+        } catch (QiniuException var) {
+            throw new InternalServerErrorException("七牛云上传失败", var);
         } finally {
             if (is != null) {
                 try {
@@ -68,6 +68,10 @@ public class QiniuClient {
             throw new InternalServerErrorException("设置七牛云文件过期时间失败", var);
         }
         return response.isOK();
+    }
+
+    public CreateMultipartUploadResponse createMultipartUpload(String bucketName, String filename) {
+        return null;
     }
 
 }

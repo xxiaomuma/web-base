@@ -15,8 +15,8 @@
         <sms.aliyun.sdk.version>4.5.1</sms.aliyun.sdk.version>
         <sms.aliyun.dysmsapi.version>1.1.0</sms.aliyun.dysmsapi.version>
         <!-- oss存储 -->
-        <minio.version>7.1.4</minio.version>
-        <qiniu.sdk.version>7.2.11</qiniu.sdk.version>
+        <minio.version>8.3.3</minio.version>
+        <qiniu.sdk.version>7.7.0</qiniu.sdk.version>
         <!-- 支付宝SDK -->
         <alipay.version>4.31.72.ALL</alipay.version>
     </properties>
@@ -62,11 +62,23 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <version>${qiniu.sdk.version}</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>okhttp</artifactId>
+                    <groupId>com.squareup.okhttp3</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
             <version>${minio.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>okhttp</artifactId>
+                    <groupId>com.squareup.okhttp3</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jdom</groupId>

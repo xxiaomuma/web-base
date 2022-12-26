@@ -13,4 +13,6 @@ public interface OSSClientAdapter {
 
     boolean expire(String bucket, String filename, int day);
 
+    String createMultipartUpload(String bucket, String filename);
+
 }
