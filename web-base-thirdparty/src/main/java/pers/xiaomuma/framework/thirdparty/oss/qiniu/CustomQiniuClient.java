@@ -23,20 +23,16 @@ public class CustomQiniuClient {
     private final BucketManager bucketManager;
     private final UploadManager uploadManager;
     private final Auth auth;
-    private final ApiUploadV2InitUpload initUploadApi;
-    private final ApiUploadV2UploadPart uploadPartApi;
-    private final ApiUploadV2CompleteUpload completeUploadApi;
+    private final Client client;
     private static final Configuration configuration = new Configuration(Zone.autoZone());
 
     public CustomQiniuClient(String accessKey, String secretKey) {
         this.auth = Auth.create(accessKey, secretKey);
-        Client client = new Client(configuration);
+        this.client = new Client(configuration);
 
         this.uploadManager = new UploadManager(configuration);
         this.bucketManager = new BucketManager(this.auth, configuration);
-        this.initUploadApi = new ApiUploadV2InitUpload(client);
-        this.uploadPartApi = new ApiUploadV2UploadPart(client);
-        this.completeUploadApi = new ApiUploadV2CompleteUpload(client);
+
     }
 
     public String upload(InputStream is, String bucket, String filename) {
@@ -83,10 +79,11 @@ public class CustomQiniuClient {
 
     public String fetchMultipartUploadId(String bucket, String filename) {
         String upToken = auth.uploadToken(bucket);
-        ApiUploadV2InitUpload.Request request = new ApiUploadV2InitUpload.Request(UPLOAD_URL, upToken)
+        ApiUploadV2InitUpload initUploadApi = new ApiUploadV2InitUpload(client);
+        ApiUploadV2InitUpload.Request initUploadRequest = new ApiUploadV2InitUpload.Request(UPLOAD_URL, upToken)
                 .setKey(filename);
         try {
-            ApiUploadV2InitUpload.Response initUploadResponse = initUploadApi.request(request);
+            ApiUploadV2InitUpload.Response initUploadResponse = initUploadApi.request(initUploadRequest);
             return initUploadResponse.getUploadId();
         } catch (QiniuException var) {
             throw new InternalServerErrorException("七牛云分片初始化上传失败", var);
@@ -95,11 +92,12 @@ public class CustomQiniuClient {
 
     public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index, Integer offset) {
         String upToken = auth.uploadToken(bucket);
-        ApiUploadV2UploadPart.Request request = new ApiUploadV2UploadPart.Request(UPLOAD_URL, upToken, uploadId, index)
+        ApiUploadV2UploadPart uploadPartApi = new ApiUploadV2UploadPart(client);
+        ApiUploadV2UploadPart.Request uploadPartRequest = new ApiUploadV2UploadPart.Request(UPLOAD_URL, upToken, uploadId, index)
                 .setKey(filename)
-                .setUploadData(data, offset, data.length, null);
+                .setUploadData(data, 0, data.length, null);
         try {
-            ApiUploadV2UploadPart.Response response = uploadPartApi.request(request);
+            ApiUploadV2UploadPart.Response response = uploadPartApi.request(uploadPartRequest);
             String etag = response.getEtag();
 
             Map<String, Object> currentPartMap = new HashMap<>();
@@ -116,11 +114,12 @@ public class CustomQiniuClient {
         customParam.put("x:foo", "foo-Value");
 
         String upToken = auth.uploadToken(bucket);
-        ApiUploadV2CompleteUpload.Request request = new ApiUploadV2CompleteUpload.Request(UPLOAD_URL, upToken, uploadId, parts)
+        ApiUploadV2CompleteUpload completeUploadApi = new ApiUploadV2CompleteUpload(client);
+        ApiUploadV2CompleteUpload.Request completeUploadRequest = new ApiUploadV2CompleteUpload.Request(UPLOAD_URL, upToken, uploadId, parts)
                 .setKey(filename)
                 .setCustomParam(customParam);
         try {
-            ApiUploadV2CompleteUpload.Response response = completeUploadApi.request(request);
+            ApiUploadV2CompleteUpload.Response response = completeUploadApi.request(completeUploadRequest);
             return response.getKey();
         } catch (QiniuException var) {
             throw new InternalServerErrorException("七牛云分片完成上传失败", var);
