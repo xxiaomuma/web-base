@@ -9,6 +9,8 @@ import pers.xiaomuma.framework.thirdparty.oss.OSSProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 
 public class MinioOSSClientAdapter implements OSSClientAdapter {
@@ -24,7 +26,7 @@ public class MinioOSSClientAdapter implements OSSClientAdapter {
     }
 
     @Override
-    public String upload(InputStream is, String filename, String bucket) {
+    public String upload(InputStream is, String bucket, String filename) {
         try {
             PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                     .bucket(bucket)
@@ -75,9 +77,19 @@ public class MinioOSSClientAdapter implements OSSClientAdapter {
     }
 
     @Override
-    public String createMultipartUpload(String bucket, String filename) {
-        CreateMultipartUploadResponse response = minioClient.createMultipartUpload(bucket, filename);
-        InitiateMultipartUploadResult result = response.result();
-        return result.uploadId();
+    public String fetchMultipartUploadId(String bucket, String filename) {
+        throw new InternalServerErrorException("暂不支持minio分片上传");
     }
+
+    @Override
+    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index) {
+        throw new InternalServerErrorException("暂不支持minio分片上传数据");
+    }
+
+    @Override
+    public String completeUploadMultipart(String bucket, String filename, String uploadId, List<Map<String, Object>> parts) {
+        throw new InternalServerErrorException("暂不支持minio分片上传完成");
+    }
+
+
 }

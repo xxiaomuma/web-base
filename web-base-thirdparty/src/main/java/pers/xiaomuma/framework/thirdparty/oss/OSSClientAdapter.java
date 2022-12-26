@@ -1,11 +1,13 @@
 package pers.xiaomuma.framework.thirdparty.oss;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 
 public interface OSSClientAdapter {
 
-    String upload(InputStream is, String filename, String bucket);
+    String upload(InputStream is, String bucket, String filename);
 
     boolean delete(String bucket, String filename);
 
@@ -13,6 +15,9 @@ public interface OSSClientAdapter {
 
     boolean expire(String bucket, String filename, int day);
 
-    String createMultipartUpload(String bucket, String filename);
+    String fetchMultipartUploadId(String bucket, String filename);
 
+    Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index);
+
+    String completeUploadMultipart(String bucket, String filename, String uploadId, List<Map<String, Object>> parts);
 }
