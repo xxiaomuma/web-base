@@ -78,6 +78,14 @@ public class OSSClient {
         return clientAdapter.completeUploadMultipart(bucket, filename, uploadId, parts);
     }
 
+    public boolean deleteUploadMultipart(String uploadId) {
+        return this.deleteUploadMultipart(clientConfig.getDefaultBucket(), uploadId);
+    }
+
+    public boolean deleteUploadMultipart(String bucket, String uploadId) {
+        return clientAdapter.deleteUploadMultipart(bucket, uploadId);
+    }
+
     public static class OSSClientConfig {
 
         private String defaultBucket;
