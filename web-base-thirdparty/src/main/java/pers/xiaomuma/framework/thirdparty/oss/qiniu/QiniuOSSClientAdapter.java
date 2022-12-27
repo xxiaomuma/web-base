@@ -49,5 +49,10 @@ public class QiniuOSSClientAdapter implements OSSClientAdapter {
         return qiniuClient.completeUploadMultipart(bucket, filename, uploadId, parts);
     }
 
+    @Override
+    public boolean deleteUploadMultipart(String bucket, String uploadId) {
+        return qiniuClient.deleteUploadMultipart(bucket, uploadId);
+    }
+
 
 }

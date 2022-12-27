@@ -20,4 +20,6 @@ public interface OSSClientAdapter {
     Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index);
 
     String completeUploadMultipart(String bucket, String filename, String uploadId, List<Map<String, Object>> parts);
+
+    boolean deleteUploadMultipart(String bucket, String uploadId);
 }

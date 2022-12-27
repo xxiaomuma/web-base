@@ -126,4 +126,17 @@ public class CustomQiniuClient {
         }
     }
 
+    public boolean deleteUploadMultipart(String bucket, String uploadId) {
+        String upToken = auth.uploadToken(bucket);
+
+        ApiUploadV2AbortUpload abortUploadApi = new ApiUploadV2AbortUpload(client);
+        ApiUploadV2AbortUpload.Request abortUploadRequest = new ApiUploadV2AbortUpload.Request(UPLOAD_URL, upToken, uploadId);
+        try {
+            ApiUploadV2AbortUpload.Response response = abortUploadApi.request(abortUploadRequest);
+            return response.isOK();
+        } catch (QiniuException var) {
+            throw new InternalServerErrorException("七牛云分片完成上传失败", var);
+        }
+    }
+
 }

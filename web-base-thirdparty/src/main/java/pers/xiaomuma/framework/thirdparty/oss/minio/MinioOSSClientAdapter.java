@@ -1,12 +1,10 @@
 package pers.xiaomuma.framework.thirdparty.oss.minio;
 
 import io.minio.*;
-import io.minio.messages.InitiateMultipartUploadResult;
 import lombok.SneakyThrows;
 import pers.xiaomuma.framework.exception.InternalServerErrorException;
 import pers.xiaomuma.framework.thirdparty.oss.OSSClientAdapter;
 import pers.xiaomuma.framework.thirdparty.oss.OSSProperties;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -89,6 +87,11 @@ public class MinioOSSClientAdapter implements OSSClientAdapter {
     @Override
     public String completeUploadMultipart(String bucket, String filename, String uploadId, List<Map<String, Object>> parts) {
         throw new InternalServerErrorException("暂不支持minio分片上传完成");
+    }
+
+    @Override
+    public boolean deleteUploadMultipart(String bucket, String uploadId) {
+        throw new InternalServerErrorException("暂不支持minio分片删除");
     }
 
 
