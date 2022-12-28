@@ -13,14 +13,13 @@ import java.util.Map;
 
 public class MinioOSSClientAdapter implements OSSClientAdapter {
 
-    private final CustomMinioClient minioClient;
+    private final MinioClient minioClient;
 
     public MinioOSSClientAdapter(OSSProperties properties) {
-        MinioClient defaultMinioClient = MinioClient.builder()
+        this.minioClient = MinioClient.builder()
                 .endpoint(properties.getEndpoint())
                 .credentials(properties.getAccessKey(), properties.getSecretKey())
                 .build();
-        this.minioClient = new CustomMinioClient(defaultMinioClient);
     }
 
     @Override
