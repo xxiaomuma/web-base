@@ -90,12 +90,12 @@ public class CustomQiniuClient {
         }
     }
 
-    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index, Integer offset) {
+    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, InputStream is, Integer index, Integer offset) {
         String upToken = auth.uploadToken(bucket);
         ApiUploadV2UploadPart uploadPartApi = new ApiUploadV2UploadPart(client);
         ApiUploadV2UploadPart.Request uploadPartRequest = new ApiUploadV2UploadPart.Request(UPLOAD_URL, upToken, uploadId, index)
                 .setKey(filename)
-                .setUploadData(data, 0, data.length, null);
+                .setUploadData(is, null, index);
         try {
             ApiUploadV2UploadPart.Response response = uploadPartApi.request(uploadPartRequest);
             String etag = response.getEtag();

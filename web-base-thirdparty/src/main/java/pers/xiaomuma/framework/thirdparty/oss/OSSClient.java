@@ -62,12 +62,12 @@ public class OSSClient {
         return clientAdapter.fetchMultipartUploadId(bucket, filename);
     }
 
-    public Map<String, Object> uploadMultipart(String filename, String uploadId, byte[] data, Integer index) {
-        return this.uploadMultipart(clientConfig.getDefaultBucket(), filename, uploadId, data, index);
+    public Map<String, Object> uploadMultipart(String filename, String uploadId, InputStream is, Integer index) {
+        return this.uploadMultipart(clientConfig.getDefaultBucket(), filename, uploadId, is, index);
     }
 
-    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index) {
-        return clientAdapter.uploadMultipart(bucket, filename, uploadId, data, index);
+    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, InputStream is, Integer index) {
+        return clientAdapter.uploadMultipart(bucket, filename, uploadId, is, index);
     }
 
     public String completeUploadMultipart(String filename, String uploadId, List<Map<String, Object>> parts) {

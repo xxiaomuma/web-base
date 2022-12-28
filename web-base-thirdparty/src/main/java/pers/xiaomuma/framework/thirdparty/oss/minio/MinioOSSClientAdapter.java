@@ -79,7 +79,7 @@ public class MinioOSSClientAdapter implements OSSClientAdapter {
     }
 
     @Override
-    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index) {
+    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, InputStream is, Integer index) {
         throw new InternalServerErrorException("暂不支持minio分片上传数据");
     }
 

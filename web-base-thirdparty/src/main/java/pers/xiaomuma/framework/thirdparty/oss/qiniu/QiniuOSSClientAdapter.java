@@ -40,8 +40,8 @@ public class QiniuOSSClientAdapter implements OSSClientAdapter {
     }
 
     @Override
-    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index) {
-        return qiniuClient.uploadMultipart(bucket, filename, uploadId, data, index, 0);
+    public Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, InputStream is, Integer index) {
+        return qiniuClient.uploadMultipart(bucket, filename, uploadId, is, index, 0);
     }
 
     @Override

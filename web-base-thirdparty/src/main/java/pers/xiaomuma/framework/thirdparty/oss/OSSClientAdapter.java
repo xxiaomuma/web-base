@@ -17,7 +17,7 @@ public interface OSSClientAdapter {
 
     String fetchMultipartUploadId(String bucket, String filename);
 
-    Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, byte[] data, Integer index);
+    Map<String, Object> uploadMultipart(String bucket, String filename, String uploadId, InputStream is, Integer index);
 
     String completeUploadMultipart(String bucket, String filename, String uploadId, List<Map<String, Object>> parts);
 
