@@ -1,5 +1,5 @@
-#### spring 基础架设
-example参照: https://github.com/xxiaomuma/example
+# spring 基础架设
+- example参照: https://github.com/xxiaomuma/example
 ###### 1.项目结构
 ```
 web-base
