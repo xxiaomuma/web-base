@@ -6,4 +6,16 @@ public class TencentIMUrlBuilder {
         return new TencentIMAccountImportUrlBuilder();
     }
 
+    public static TencentIMAccountModifyUrlBuilder accountModifyUrlBuilder() {
+        return new TencentIMAccountModifyUrlBuilder();
+    }
+
+    public static TencentIMFriendAddBuilder friendAddBuilder() {
+        return new TencentIMFriendAddBuilder();
+    }
+
+    public static TencentIMFriendRemoveBuilder friendRemoveBuilder() {
+        return new TencentIMFriendRemoveBuilder();
+    }
+
 }
