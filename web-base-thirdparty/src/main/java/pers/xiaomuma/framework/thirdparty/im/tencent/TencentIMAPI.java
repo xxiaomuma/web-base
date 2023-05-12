@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import pers.xiaomuma.framework.serialize.JsonUtils;
 import pers.xiaomuma.framework.thirdparty.im.IMResult;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMFriendAddParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMFriendRemoveParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMModifyAccountParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMRegisterAccountParam;
+import pers.xiaomuma.framework.thirdparty.im.tencent.param.*;
 import pers.xiaomuma.framework.thirdparty.im.tencent.request.TencentIMRequest;
 import pers.xiaomuma.framework.thirdparty.im.tencent.request.TencentIMRequestManager;
 import pers.xiaomuma.framework.thirdparty.im.tencent.response.TencentIMResponse;
@@ -60,11 +57,11 @@ public class TencentIMAPI {
         return IMResult.error(imResponse.getErrorInfo());
     }
 
-    public IMResult<Void> addFriend(String adminSig, TencentIMFriendAddParam param) {
+    public IMResult<Void> addFriend(String adminSig, TencentIMAddFriendParam param) {
         ResponseEntity<String> response = request.addFriend(adminSig, param);
         logger.debug("Tencent IM强制添加双向好友, {}", response.getBody());
         if (!response.getStatusCode().is2xxSuccessful()) {
-            return IMResult.error("Tencent IM强制添加双向好友, response:" + response.getBody());
+            return IMResult.error("Tencent IM强制添加双向好友失败, response:" + response.getBody());
         }
         TencentIMResponse imResponse = JsonUtils.json2Object(response.getBody(), TencentIMResponse.class);
         if (imResponse.isSuccess()) {
@@ -73,11 +70,50 @@ public class TencentIMAPI {
         return IMResult.error(imResponse.getErrorInfo());
     }
 
-    public IMResult<Void> removeFriend(String adminSig, TencentIMFriendRemoveParam param) {
+    public IMResult<Void> removeFriend(String adminSig, TencentIMRemoveFriendParam param) {
         ResponseEntity<String> response = request.removeFriend(adminSig, param);
         logger.debug("Tencent IM删除双向好友, {}", response.getBody());
         if (!response.getStatusCode().is2xxSuccessful()) {
-            return IMResult.error("Tencent IM删除双向好友, response:" + response.getBody());
+            return IMResult.error("Tencent IM删除双向好友失败, response:" + response.getBody());
+        }
+        TencentIMResponse imResponse = JsonUtils.json2Object(response.getBody(), TencentIMResponse.class);
+        if (imResponse.isSuccess()) {
+            return IMResult.success();
+        }
+        return IMResult.error(imResponse.getErrorInfo());
+    }
+
+    public IMResult<Void> addGroup(String adminSig, TencentIMAddGroupParam param) {
+        ResponseEntity<String> response = request.addGroup(adminSig, param);
+        logger.debug("Tencent IM创建群聊, {}", response.getBody());
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            return IMResult.error("Tencent IM创建群聊失败, response:" + response.getBody());
+        }
+        TencentIMResponse imResponse = JsonUtils.json2Object(response.getBody(), TencentIMResponse.class);
+        if (imResponse.isSuccess()) {
+            return IMResult.success();
+        }
+        return IMResult.error(imResponse.getErrorInfo());
+    }
+
+    public IMResult<Void> addGroupMember(String adminSig, TencentIMAddGroupMemberParam param) {
+        ResponseEntity<String> response = request.addGroupMember(adminSig, param);
+        logger.debug("Tencent IM添加群成员, {}", response.getBody());
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            return IMResult.error("Tencent IM添加群成员失败, response:" + response.getBody());
+        }
+        TencentIMResponse imResponse = JsonUtils.json2Object(response.getBody(), TencentIMResponse.class);
+        if (imResponse.isSuccess()) {
+            return IMResult.success();
+        }
+        return IMResult.error(imResponse.getErrorInfo());
+    }
+
+    public IMResult<Void> removeGroupMember(String adminSig, TencentIMRemoveGroupMemberParam param) {
+        ResponseEntity<String> response = request.removeGroupMember(adminSig, param);
+        logger.debug("Tencent IM移除群成员, {}", response.getBody());
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            return IMResult.error("Tencent IM移除群成员失败, response:" + response.getBody());
         }
         TencentIMResponse imResponse = JsonUtils.json2Object(response.getBody(), TencentIMResponse.class);
         if (imResponse.isSuccess()) {

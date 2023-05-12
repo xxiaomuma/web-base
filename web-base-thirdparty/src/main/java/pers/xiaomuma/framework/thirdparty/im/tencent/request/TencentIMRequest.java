@@ -1,10 +1,7 @@
 package pers.xiaomuma.framework.thirdparty.im.tencent.request;
 
 import org.springframework.http.ResponseEntity;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMFriendAddParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMFriendRemoveParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMModifyAccountParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMRegisterAccountParam;
+import pers.xiaomuma.framework.thirdparty.im.tencent.param.*;
 
 public interface TencentIMRequest {
 
@@ -16,7 +13,13 @@ public interface TencentIMRequest {
 
     ResponseEntity<String> modifyAccount(String adminSig, TencentIMModifyAccountParam param);
 
-    ResponseEntity<String> addFriend(String adminSig, TencentIMFriendAddParam param);
+    ResponseEntity<String> addFriend(String adminSig, TencentIMAddFriendParam param);
 
-    ResponseEntity<String> removeFriend(String adminSig, TencentIMFriendRemoveParam param);
+    ResponseEntity<String> removeFriend(String adminSig, TencentIMRemoveFriendParam param);
+
+    ResponseEntity<String> addGroup(String adminSig, TencentIMAddGroupParam param);
+
+    ResponseEntity<String> addGroupMember(String adminSig, TencentIMAddGroupMemberParam param);
+
+    ResponseEntity<String> removeGroupMember(String adminSig, TencentIMRemoveGroupMemberParam param);
 }

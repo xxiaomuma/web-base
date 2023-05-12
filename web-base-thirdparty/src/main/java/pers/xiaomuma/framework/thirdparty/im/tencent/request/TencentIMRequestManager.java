@@ -4,10 +4,7 @@ import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import pers.xiaomuma.framework.thirdparty.im.tencent.TencentIMProperties;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMFriendAddParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMFriendRemoveParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMModifyAccountParam;
-import pers.xiaomuma.framework.thirdparty.im.tencent.param.TencentIMRegisterAccountParam;
+import pers.xiaomuma.framework.thirdparty.im.tencent.param.*;
 import pers.xiaomuma.framework.thirdparty.im.tencent.url.TencentIMUrlBuilder;
 import pers.xiaomuma.framework.thirdparty.utils.GenerateUserSigUtils;
 
@@ -36,7 +33,7 @@ public class TencentIMRequestManager implements TencentIMRequest {
 
     @Override
     public ResponseEntity<String> register(String adminSig, TencentIMRegisterAccountParam param) {
-        String requestAddress = TencentIMUrlBuilder.accountImportUrlBuilder()
+        String requestAddress = TencentIMUrlBuilder.importAccountUrlBuilder()
                 .domain(properties.getDomain())
                 .version(properties.getVersion())
                 .sdkappid(properties.getAppId())
@@ -51,7 +48,7 @@ public class TencentIMRequestManager implements TencentIMRequest {
 
     @Override
     public ResponseEntity<String> modifyAccount(String adminSig, TencentIMModifyAccountParam param) {
-        String requestAddress = TencentIMUrlBuilder.accountModifyUrlBuilder()
+        String requestAddress = TencentIMUrlBuilder.modifyAccountUrlBuilder()
                 .domain(properties.getDomain())
                 .version(properties.getVersion())
                 .sdkappid(properties.getAppId())
@@ -65,8 +62,8 @@ public class TencentIMRequestManager implements TencentIMRequest {
     }
 
     @Override
-    public ResponseEntity<String> addFriend(String adminSig, TencentIMFriendAddParam param) {
-        String requestAddress = TencentIMUrlBuilder.friendAddBuilder()
+    public ResponseEntity<String> addFriend(String adminSig, TencentIMAddFriendParam param) {
+        String requestAddress = TencentIMUrlBuilder.addFriendBuilder()
                 .domain(properties.getDomain())
                 .version(properties.getVersion())
                 .sdkappid(properties.getAppId())
@@ -80,8 +77,53 @@ public class TencentIMRequestManager implements TencentIMRequest {
     }
 
     @Override
-    public ResponseEntity<String> removeFriend(String adminSig, TencentIMFriendRemoveParam param) {
-        String requestAddress = TencentIMUrlBuilder.friendRemoveBuilder()
+    public ResponseEntity<String> removeFriend(String adminSig, TencentIMRemoveFriendParam param) {
+        String requestAddress = TencentIMUrlBuilder.removeFriendBuilder()
+                .domain(properties.getDomain())
+                .version(properties.getVersion())
+                .sdkappid(properties.getAppId())
+                .identifier(properties.getUsername())
+                .usersig(adminSig)
+                .build();
+        String requestBody = param.parse2RequestBody();
+        HttpHeaders headers = getHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(requestBody, headers);
+        return restTemplate.exchange(requestAddress, HttpMethod.POST, httpEntity, String.class);
+    }
+
+    @Override
+    public ResponseEntity<String> addGroup(String adminSig, TencentIMAddGroupParam param) {
+        String requestAddress = TencentIMUrlBuilder.addGroupBuilder()
+                .domain(properties.getDomain())
+                .version(properties.getVersion())
+                .sdkappid(properties.getAppId())
+                .identifier(properties.getUsername())
+                .usersig(adminSig)
+                .build();
+        String requestBody = param.parse2RequestBody();
+        HttpHeaders headers = getHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(requestBody, headers);
+        return restTemplate.exchange(requestAddress, HttpMethod.POST, httpEntity, String.class);
+    }
+
+    @Override
+    public ResponseEntity<String> addGroupMember(String adminSig, TencentIMAddGroupMemberParam param) {
+        String requestAddress = TencentIMUrlBuilder.addGroupMemberBuilder()
+                .domain(properties.getDomain())
+                .version(properties.getVersion())
+                .sdkappid(properties.getAppId())
+                .identifier(properties.getUsername())
+                .usersig(adminSig)
+                .build();
+        String requestBody = param.parse2RequestBody();
+        HttpHeaders headers = getHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(requestBody, headers);
+        return restTemplate.exchange(requestAddress, HttpMethod.POST, httpEntity, String.class);
+    }
+
+    @Override
+    public ResponseEntity<String> removeGroupMember(String adminSig, TencentIMRemoveGroupMemberParam param) {
+        String requestAddress = TencentIMUrlBuilder.removeGroupMemberBuilder()
                 .domain(properties.getDomain())
                 .version(properties.getVersion())
                 .sdkappid(properties.getAppId())
