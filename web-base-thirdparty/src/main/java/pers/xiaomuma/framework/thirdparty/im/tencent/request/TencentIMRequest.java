@@ -22,4 +22,6 @@ public interface TencentIMRequest {
     ResponseEntity<String> addGroupMember(String adminSig, TencentIMAddGroupMemberParam param);
 
     ResponseEntity<String> removeGroupMember(String adminSig, TencentIMRemoveGroupMemberParam param);
+
+    <T> ResponseEntity<String> sendMessage(String adminSig, TencentIMSenderMessageParam<T> param);
 }

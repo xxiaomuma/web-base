@@ -136,6 +136,21 @@ public class TencentIMRequestManager implements TencentIMRequest {
         return restTemplate.exchange(requestAddress, HttpMethod.POST, httpEntity, String.class);
     }
 
+    @Override
+    public <T> ResponseEntity<String> sendMessage(String adminSig, TencentIMSenderMessageParam<T> param) {
+        String requestAddress = TencentIMUrlBuilder.senderMessageBuilder()
+                .domain(properties.getDomain())
+                .version(properties.getVersion())
+                .sdkappid(properties.getAppId())
+                .identifier(properties.getUsername())
+                .usersig(adminSig)
+                .build();
+        String requestBody = param.parse2RequestBody();
+        HttpHeaders headers = getHeaders();
+        HttpEntity<String> httpEntity = new HttpEntity<>(requestBody, headers);
+        return restTemplate.exchange(requestAddress, HttpMethod.POST, httpEntity, String.class);
+    }
+
     private HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("ContentType", "application/json;charset=UTF-8");

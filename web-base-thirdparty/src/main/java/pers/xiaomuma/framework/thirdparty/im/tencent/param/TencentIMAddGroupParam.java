@@ -14,7 +14,9 @@ public class TencentIMAddGroupParam {
 
     private String name;
 
-    private List<TencentIMAddGroupMemberParam> memberParams;
+    private String faceUrl;
+
+    private List<GroupMemberParam> memberParams;
 
     public String getGroupId() {
         return groupId;
@@ -32,15 +34,23 @@ public class TencentIMAddGroupParam {
         this.name = name;
     }
 
-    public List<TencentIMAddGroupMemberParam> getMemberParams() {
+    public String getFaceUrl() {
+        return faceUrl;
+    }
+
+    public void setFaceUrl(String faceUrl) {
+        this.faceUrl = faceUrl;
+    }
+
+    public List<GroupMemberParam> getMemberParams() {
         return memberParams;
     }
 
-    public void setMemberParams(List<TencentIMAddGroupMemberParam> memberParams) {
+    public void setMemberParams(List<GroupMemberParam> memberParams) {
         this.memberParams = memberParams;
     }
 
-    public static class TencentIMAddGroupMemberParam {
+    public static class GroupMemberParam {
 
         private Integer memberId;
 
@@ -68,9 +78,10 @@ public class TencentIMAddGroupParam {
         requestMap.put("Type", "Private");
         requestMap.put("GroupId", this.getGroupId());
         requestMap.put("Name", this.getName());
+        requestMap.put("FaceUrl", this.getFaceUrl());
 
         List<Map<String, Object>> memberList = Lists.newArrayList();
-        for (TencentIMAddGroupMemberParam param : this.getMemberParams()) {
+        for (GroupMemberParam param : this.getMemberParams()) {
             Map<String, Object> memberMap = Maps.newHashMap();
             memberMap.put("Member_Account", param.getMemberId());
             if ("ADMIN".equals(param.getRole())) {

@@ -64,6 +64,7 @@ public class JwtTokenGenerator {
         String accessToken = this.generateAccessToken(aud, authorities, null);
         tokenMap.put("token", accessToken);
         tokenMap.put("expire_time", now.plusSeconds(accessTokenValidSeconds).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        tokenMap.put("type", "bearer");
         return tokenMap;
     }
 

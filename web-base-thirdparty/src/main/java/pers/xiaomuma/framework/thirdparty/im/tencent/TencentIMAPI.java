@@ -121,4 +121,18 @@ public class TencentIMAPI {
         }
         return IMResult.error(imResponse.getErrorInfo());
     }
+
+
+    public <T> IMResult<Void> sendMessage(String adminSig, TencentIMSenderMessageParam<T> param) {
+        ResponseEntity<String> response = request.sendMessage(adminSig, param);
+        logger.debug("Tencent IM发送消息, {}", response.getBody());
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            return IMResult.error("Tencent IM发送消息, response:" + response.getBody());
+        }
+        TencentIMResponse imResponse = JsonUtils.json2Object(response.getBody(), TencentIMResponse.class);
+        if (imResponse.isSuccess()) {
+            return IMResult.success();
+        }
+        return IMResult.error(imResponse.getErrorInfo());
+    }
 }

@@ -29,4 +29,8 @@ public class TencentIMUrlBuilder {
     public static TencentIMRemoveGroupMemberBuilder removeGroupMemberBuilder() {
         return new TencentIMRemoveGroupMemberBuilder();
     }
+
+    public static TencentIMsSenderMessageBuilder senderMessageBuilder() {
+        return new TencentIMsSenderMessageBuilder();
+    }
 }
