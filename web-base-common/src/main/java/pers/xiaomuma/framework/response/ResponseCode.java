@@ -2,6 +2,8 @@ package pers.xiaomuma.framework.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * 9xx 参数异常
  *
  */
+@Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public enum ResponseCode {
@@ -27,35 +30,15 @@ public enum ResponseCode {
     PARAM_IS_VALID(901, "参数无效"),
     PARAM_IS_BLANK(902, "参数为空"),
     PARAM_TYPE_BIND_ERROR(903, "参数类型错误"),
-    PARAM_MISS(904, "参数缺失");
+    PARAM_MISS(904, "参数缺失"),
+    SERVER_RPC_ERROR(999, "服务RPC调用异常");
 
-    private int code;
+    private final int code;
 
-    private String msg;
-
-    ResponseCode() {
-        this.code = HttpResponseCode.SC_OK;
-        this.msg = "Operation is Successful";
-    }
+    private final String msg;
 
     ResponseCode(int code, String msg) {
         this.code = code;
-        this.msg = msg;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public void setMsg(String msg) {
         this.msg = msg;
     }
 
@@ -66,12 +49,6 @@ public enum ResponseCode {
             }
         }
         return null;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + "\"code\":" + this.code +
-                "," + "\"msg\":\"" + msg + "\"}";
     }
 
 }

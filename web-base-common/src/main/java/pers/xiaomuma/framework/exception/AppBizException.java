@@ -5,26 +5,26 @@ import pers.xiaomuma.framework.response.ResponseCode;
 
 public class AppBizException extends RuntimeException {
 
-	private ResponseCode resultCode;
-	private String viewMessage;
+	private final ResponseCode code;
+	private final String message;
 
-	public AppBizException(String viewMessage){
-		super(viewMessage);
-		this.resultCode = ResponseCode.APP_BIZ_ERROR;
-		this.viewMessage = viewMessage;
+	public AppBizException(String message){
+		super(message);
+		this.code = ResponseCode.APP_BIZ_ERROR;
+		this.message = message;
 	}
 
-	public AppBizException(ResponseCode resultCode, String viewMessage){
-		super(viewMessage);
-		this.resultCode = resultCode;
-		this.viewMessage = viewMessage;
+	public AppBizException(ResponseCode code, String message){
+		super(message);
+		this.code = code;
+		this.message = message;
 	}
 
 	public ResponseCode getResultCode() {
-		return resultCode;
+		return this.code;
 	}
 
-	public String getViewMessage() {
-		return viewMessage;
+	public String getResultMessage() {
+		return this.message;
 	}
 }

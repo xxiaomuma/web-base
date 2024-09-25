@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ResultCodeDeserializer extends JsonDeserializer<ResponseCode> {
 
-	private final static String RESULT_CODE_FIELD_CODE = "code";
+	private static final String RESULT_CODE_FIELD_CODE = "code";
 
 	@Override
 	public ResponseCode deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {

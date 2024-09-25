@@ -1,65 +1,69 @@
 package pers.xiaomuma.framework.response;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-import pers.xiaomuma.framework.serializer.ResultCodeDeserializer;
+import java.io.Serializable;
 
 @Data
-@SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
-public class BaseResponse {
+public class BaseResponse<T> implements Serializable {
 
-    @Builder.Default
-    @Getter @Setter
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 响应编码
+     */
+    private Integer code;
+
+    /**
+     * 响应消息
+     */
     private String message = "";
-    @Builder.Default
-    @Getter @Setter
-    @JsonDeserialize(using = ResultCodeDeserializer.class)
-    private ResponseCode code = ResponseCode.SUCCESS;
-    @Builder.Default
-    @Getter @Setter
-    private boolean success = true;
 
-    public void setCode(ResponseCode code) {
-        this.code = code;
-        this.success = (code == ResponseCode.SUCCESS);
+    /**
+     * 是否成功
+     */
+    private T data;
+
+    public BaseResponse(ResponseCode code) {
+        this.message = code.getMsg();
+        this.code = code.getCode();
     }
 
     public BaseResponse(String message, ResponseCode code) {
         this.message = message;
-        this.code = code;
-        this.success = (code == ResponseCode.SUCCESS);
+        this.code = code.getCode();
     }
 
-    public BaseResponse(boolean success, String message, ResponseCode code) {
+    public BaseResponse(String message, T data, ResponseCode code) {
         this.message = message;
-        this.code = code;
-        this.success = success;
+        this.code = code.getCode();
+        this.data = data;
     }
 
-
-    public static BaseResponse success() {
-        return new BaseResponse(true, "ok", ResponseCode.SUCCESS);
+    public static <T> BaseResponse<T> success() {
+        return new BaseResponse<>("ok", ResponseCode.SUCCESS);
     }
 
-    public static BaseResponse success(String message) {
-        return new BaseResponse(true, message, ResponseCode.SUCCESS);
+    public static <T> BaseResponse<T> success(T data) {
+        return new BaseResponse<>("ok", data, ResponseCode.SUCCESS);
     }
 
-    public static BaseResponse failed(String message) {
-        return new BaseResponse(false, message, ResponseCode.APP_BIZ_ERROR);
+    public static <T> BaseResponse<T> success(String message, T data) {
+        return new BaseResponse<>(message, data, ResponseCode.SUCCESS);
     }
 
-    public static BaseResponse failed(String message, ResponseCode code) {
-        return new BaseResponse(false, message, code);
+    public static <T> BaseResponse<T> success(String message) {
+        return new BaseResponse<>(message, ResponseCode.SUCCESS);
     }
 
-    @Override
-    public String toString() {
-        return "{" + "\"message\":\"" + this.message +
-                "\"," + "\"code\":" + code.toString() + "}";
+    public static <T> BaseResponse<T> failed(String message) {
+        return new BaseResponse<>(message, ResponseCode.APP_BIZ_ERROR);
     }
 
+    public static <T> BaseResponse<T> failed(String message, ResponseCode code) {
+        return new BaseResponse<>(message, code);
+    }
+
+    public static <T> BaseResponse<T> failed(ResponseCode code) {
+        return new BaseResponse<>(code.getMsg(), code);
+    }
 }

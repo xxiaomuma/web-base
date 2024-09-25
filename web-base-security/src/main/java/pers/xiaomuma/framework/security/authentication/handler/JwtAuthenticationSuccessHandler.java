@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import pers.xiaomuma.framework.response.ViewResponse;
+import pers.xiaomuma.framework.response.BaseResponse;
 import pers.xiaomuma.framework.security.authentication.jwt.JwtTokenGenerator;
 import pers.xiaomuma.framework.security.user.CustomUser;
 import pers.xiaomuma.framework.serialize.JsonUtils;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final Logger logger = LoggerFactory.getLogger(JwtAuthenticationSuccessHandler.class);
-    private JwtTokenGenerator jwtTokenGenerator;
+    private final JwtTokenGenerator jwtTokenGenerator;
 
     public JwtAuthenticationSuccessHandler(JwtTokenGenerator jwtTokenGenerator) {
         this.jwtTokenGenerator = jwtTokenGenerator;
@@ -35,7 +35,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
             Map<String, String> passport = this.jwtTokenGenerator
                     .generatePassport(Integer.toString(userId), null, customUser.getAuthorities());
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(JsonUtils.object2Json(ViewResponse.success(passport)));
+            response.getWriter().write(JsonUtils.object2Json(BaseResponse.success(passport)));
         }
     }
 }

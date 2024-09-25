@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import pers.xiaomuma.framework.response.BaseResponse;
 import pers.xiaomuma.framework.response.ResponseCode;
-import pers.xiaomuma.framework.response.ViewResponse;
 import pers.xiaomuma.framework.serialize.JsonUtils;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
     private static final String DEFAULT_ERR_MSG;
 
     static {
-        DEFAULT_ERR_MSG = JsonUtils.object2Json(ViewResponse.failed(ResponseCode.UN_AUTHORIZED, ""));
+        DEFAULT_ERR_MSG = JsonUtils.object2Json(BaseResponse.failed(ResponseCode.UN_AUTHORIZED));
     }
 
     public RestAccessDeniedHandler () {}
