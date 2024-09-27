@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import pers.xiaomuma.framework.core.global.ApplicationConstant;
-import pers.xiaomuma.framework.rpc.feign.interceptor.AppInfoFeignInterceptor;
+import pers.xiaomuma.framework.rpc.feign.interceptor.RpcFeignInterceptor;
 
 @Configuration
 public class FeignCustomConfiguration {
@@ -32,8 +32,8 @@ public class FeignCustomConfiguration {
 	}
 
 	@Bean
-	public AppInfoFeignInterceptor appInfoFeignInterceptor(ApplicationConstant applicationConstant) {
-		return new AppInfoFeignInterceptor(applicationConstant.applicationName);
+	public RpcFeignInterceptor rpcFeignInterceptor(ApplicationConstant applicationConstant) {
+		return new RpcFeignInterceptor();
 	}
 
 	@Bean

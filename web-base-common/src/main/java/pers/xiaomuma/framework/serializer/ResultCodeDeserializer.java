@@ -10,6 +10,8 @@ import pers.xiaomuma.framework.response.ResponseCode;
 
 import java.io.IOException;
 
+
+@Deprecated
 public class ResultCodeDeserializer extends JsonDeserializer<ResponseCode> {
 
 	private static final String RESULT_CODE_FIELD_CODE = "code";

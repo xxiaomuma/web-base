@@ -20,12 +20,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextListener;
 import pers.xiaomuma.framework.core.global.ApplicationConstant;
 import pers.xiaomuma.framework.core.startup.BaseApplicationInitializer;
-import pers.xiaomuma.framework.rpc.aop.ExceptionCatcherInterceptor;
 import pers.xiaomuma.framework.rpc.config.DefaultContextRefresher;
 import pers.xiaomuma.framework.rpc.feign.annotation.EnableCustomFeignClients;
 import pers.xiaomuma.framework.rpc.feign.config.FeignCustomConfiguration;
+import pers.xiaomuma.framework.rpc.feign.interceptor.RpcFeignInterceptor;
 import pers.xiaomuma.framework.rpc.feign.okhttp.CustomOkHttpFeignClient;
 import pers.xiaomuma.framework.rpc.feign.okhttp.OkHttpLoggingInterceptor;
 import pers.xiaomuma.framework.rpc.resttemplate.EnhancedRestTemplate;
@@ -34,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableDiscoveryClient
 @EnableCustomFeignClients(basePackages = "pers.xiaomuma")
-@Import({FeignCustomConfiguration.class, ExceptionCatcherInterceptor.class})
+@Import({FeignCustomConfiguration.class, RpcFeignInterceptor.class})
 public class ServiceClientConfiguration {
 
 	@Primary
@@ -82,6 +83,11 @@ public class ServiceClientConfiguration {
 	public ContextRefresher contextRefresher(ConfigurableApplicationContext context,
 											 RefreshScope scope) {
 		return new DefaultContextRefresher(context, scope);
+	}
+
+	@Bean
+	public RequestContextListener requestContextListener(){
+		return new RequestContextListener();
 	}
 
 }

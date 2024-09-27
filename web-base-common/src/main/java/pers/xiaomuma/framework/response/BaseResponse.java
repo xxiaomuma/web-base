@@ -1,6 +1,7 @@
 package pers.xiaomuma.framework.response;
 
 import lombok.*;
+import pers.xiaomuma.framework.standard.service.ServiceResult;
 import java.io.Serializable;
 
 @Data
@@ -23,6 +24,10 @@ public class BaseResponse<T> implements Serializable {
      */
     private T data;
 
+    public BaseResponse() {
+
+    }
+
     public BaseResponse(ResponseCode code) {
         this.message = code.getMsg();
         this.code = code.getCode();
@@ -37,6 +42,10 @@ public class BaseResponse<T> implements Serializable {
         this.message = message;
         this.code = code.getCode();
         this.data = data;
+    }
+
+    public boolean isSuccess() {
+        return this.code == ResponseCode.SUCCESS.getCode();
     }
 
     public static <T> BaseResponse<T> success() {
@@ -66,4 +75,13 @@ public class BaseResponse<T> implements Serializable {
     public static <T> BaseResponse<T> failed(ResponseCode code) {
         return new BaseResponse<>(code.getMsg(), code);
     }
+
+    public static <T> BaseResponse<T> response(ServiceResult<T> serviceResult) {
+        BaseResponse<T> response = new BaseResponse<>();
+        response.setCode(serviceResult.isSuccess()? ResponseCode.SUCCESS.getCode() : ResponseCode.APP_BIZ_ERROR.getCode());
+        response.setMessage(serviceResult.getErrorMsg());
+        response.setData(serviceResult.getReturnValue());
+        return response;
+    }
+
 }
