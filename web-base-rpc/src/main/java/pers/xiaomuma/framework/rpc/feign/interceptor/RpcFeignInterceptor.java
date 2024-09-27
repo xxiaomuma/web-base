@@ -6,11 +6,19 @@ import feign.RequestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import pers.xiaomuma.framework.constant.GlobalRequestHeader;
+import pers.xiaomuma.framework.core.global.ApplicationConstant;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
+import java.util.Optional;
 
 public class RpcFeignInterceptor implements RequestInterceptor {
 
+	private final String appName;
+
+	public RpcFeignInterceptor(ApplicationConstant constant) {
+		this.appName = Optional.ofNullable(constant.applicationName).orElse("N/A");
+	}
 
 	@Override
 	public void apply(RequestTemplate template) {
@@ -22,6 +30,6 @@ public class RpcFeignInterceptor implements RequestInterceptor {
 				template.header(GlobalRequestHeader.Authorization, token);
 			}
 		}
-		//template.header(GlobalRequestHeader.APP_INFO, appName);
+		template.header(GlobalRequestHeader.APP_INFO, appName);
 	}
 }

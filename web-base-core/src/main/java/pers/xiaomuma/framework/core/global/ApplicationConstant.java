@@ -24,12 +24,6 @@ public class ApplicationConstant {
     public String profile;
 
     /**
-     * 执行任务的线程数量
-     */
-    @Value("${app.scheduler.thread.count:0}")
-    public int schedulerThreadCount;
-
-    /**
      * 连接超时时间(默认5秒)
      */
     @Value("${app.okhttp.connect.timeout:5000}")
@@ -60,36 +54,30 @@ public class ApplicationConstant {
     public int okHttpAliveDuration;
 
     /**
-     * 全局sql超时时间, 默认60秒
-     */
-    @Value("${app.ds.timeout.global:60}")
-    public int globalDataSourceTimeout;
-
-    /**
      * NONE 不打印日志
      * MINIMUM 不打印请求消息体, 请求参数, 请求响应头
      * SIMPLE 打印精简的日志
      * ALL 打印所有日志
      */
-    @Value("${app.log.logLevel:simple}")
+    @Value("${app.okhttp.log.logLevel:none}")
     public String logLevel;
 
     /**
      * 打印日志忽略的url
      */
-    @Value("${app.log.log.ignore.urls:}")
+    @Value("${app.okhttp.log.ignore.urls:}")
     public String[] httpLogIgnoreUrls;
 
     /**
      * 打印日志忽略的参数
      */
-    @Value("${app.log.log.ignore.urlParams:}")
+    @Value("${app.okhttp.log.ignore.urlParams:}")
     public String[] httpLogIgnoreUrlParams;
 
     /**
      * 打印日志忽略的请求头
      */
-    @Value("${app.log.log.ignore.headers:}")
+    @Value("${app.okhttp.log.ignore.headers:}")
     public String[] httpLogIgnoreHeaders;
 
 

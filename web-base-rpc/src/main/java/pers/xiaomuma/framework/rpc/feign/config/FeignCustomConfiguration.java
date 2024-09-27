@@ -33,7 +33,7 @@ public class FeignCustomConfiguration {
 
 	@Bean
 	public RpcFeignInterceptor rpcFeignInterceptor(ApplicationConstant applicationConstant) {
-		return new RpcFeignInterceptor();
+		return new RpcFeignInterceptor(applicationConstant);
 	}
 
 	@Bean
