@@ -4,16 +4,17 @@
     <parent>
         <artifactId>web-base</artifactId>
         <groupId>pers.xiaomuma.web</groupId>
-        <version>2.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>web-base-web</artifactId>
+    <version>${revision}</version>
 
     <dependencies>
         <dependency>
             <groupId>pers.xiaomuma.web</groupId>
             <artifactId>web-base-core</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -30,11 +31,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-            <version>2.2.0.RELEASE</version>
-        </dependency>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>

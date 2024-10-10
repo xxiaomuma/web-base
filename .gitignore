@@ -2,6 +2,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 *.pdb
 logs
+*.flattened-pom.xml
 
 ### STS ###
 .apt_generated
