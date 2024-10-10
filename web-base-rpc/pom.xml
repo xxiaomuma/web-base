@@ -11,6 +11,10 @@
     <artifactId>web-base-rpc</artifactId>
     <version>${revision}</version>
 
+    <properties>
+        <nacos.version>2.1.1.RELEASE</nacos.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>pers.xiaomuma.web</groupId>
@@ -39,10 +43,12 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>${nacos.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>${nacos.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
