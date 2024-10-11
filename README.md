@@ -1,5 +1,5 @@
 # spring 基础架设
-- example参照: [https://github.com/xxiaomuma/example](https://github.com/xxiaomuma/spring-cloud-example)
+- example参照: [spring cloud example 示例](https://github.com/xxiaomuma/spring-cloud-example)
 ###### 1.项目结构
 ```
 web-base
