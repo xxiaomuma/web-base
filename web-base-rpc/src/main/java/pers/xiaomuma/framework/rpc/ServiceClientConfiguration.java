@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.RequestContextListener;
 import pers.xiaomuma.framework.core.global.ApplicationConstant;
 import pers.xiaomuma.framework.core.startup.BaseApplicationInitializer;
 import pers.xiaomuma.framework.rpc.config.DefaultContextRefresher;
@@ -30,6 +29,7 @@ import pers.xiaomuma.framework.rpc.feign.interceptor.RpcFeignInterceptor;
 import pers.xiaomuma.framework.rpc.feign.okhttp.CustomOkHttpFeignClient;
 import pers.xiaomuma.framework.rpc.feign.okhttp.OkHttpLoggingInterceptor;
 import pers.xiaomuma.framework.rpc.resttemplate.EnhancedRestTemplate;
+
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -38,56 +38,52 @@ import java.util.concurrent.TimeUnit;
 @Import({FeignCustomConfiguration.class, RpcFeignInterceptor.class})
 public class ServiceClientConfiguration {
 
-	@Primary
-	@Bean
-	public OkHttpClient okHttpClient(ApplicationConstant applicationConstant) {
-		return buildOkHttp3Client(applicationConstant);
-	}
+    @Primary
+    @Bean
+    public OkHttpClient okHttpClient(ApplicationConstant applicationConstant) {
+        return buildOkHttp3Client(applicationConstant);
+    }
 
-	private OkHttpClient buildOkHttp3Client(ApplicationConstant applicationConstant) {
-		return new OkHttpClient.Builder()
-				.readTimeout(applicationConstant.okHttpReadTimeout, TimeUnit.MILLISECONDS)
-				.connectTimeout(applicationConstant.okHttpConnectTimeout, TimeUnit.MILLISECONDS)
-				.writeTimeout(applicationConstant.okHttpWriteTimeout, TimeUnit.MILLISECONDS)
-				.retryOnConnectionFailure(true)
-				.connectionPool(new ConnectionPool(applicationConstant.okHttpMaxIdle,
-						applicationConstant.okHttpAliveDuration, TimeUnit.SECONDS))
-				.addInterceptor(new OkHttpLoggingInterceptor(applicationConstant)).build();
-	}
+    private OkHttpClient buildOkHttp3Client(ApplicationConstant applicationConstant) {
+        return new OkHttpClient.Builder()
+                .readTimeout(applicationConstant.okHttpReadTimeout, TimeUnit.MILLISECONDS)
+                .connectTimeout(applicationConstant.okHttpConnectTimeout, TimeUnit.MILLISECONDS)
+                .writeTimeout(applicationConstant.okHttpWriteTimeout, TimeUnit.MILLISECONDS)
+                .retryOnConnectionFailure(true)
+                .connectionPool(new ConnectionPool(applicationConstant.okHttpMaxIdle,
+                        applicationConstant.okHttpAliveDuration, TimeUnit.SECONDS))
+                .addInterceptor(new OkHttpLoggingInterceptor(applicationConstant)).build();
+    }
 
-	@Bean
-	public Client feignClient(CachingSpringLoadBalancerFactory cachingFactory,
-							  SpringClientFactory clientFactory,
-							  OkHttpClient okHttpClient) {
-		// ribbon 路由规则拓展
-		Client feignOkHttpClient = new CustomOkHttpFeignClient(okHttpClient);
-		return new LoadBalancerFeignClient(feignOkHttpClient, cachingFactory, clientFactory);
-	}
+    @Bean
+    public Client feignClient(CachingSpringLoadBalancerFactory cachingFactory,
+                              SpringClientFactory clientFactory,
+                              OkHttpClient okHttpClient) {
+        // ribbon 路由规则拓展
+        Client feignOkHttpClient = new CustomOkHttpFeignClient(okHttpClient);
+        return new LoadBalancerFeignClient(feignOkHttpClient, cachingFactory, clientFactory);
+    }
 
-	@Bean
-	public BaseApplicationInitializer enhancedRestTemplateInitializer(ApplicationContext ctx) {
-		return () -> EnhancedRestTemplate.initBuilderInfo(ctx);
-	}
+    @Bean
+    public BaseApplicationInitializer enhancedRestTemplateInitializer(ApplicationContext ctx) {
+        return () -> EnhancedRestTemplate.initBuilderInfo(ctx);
+    }
 
-	@LoadBalanced
-	@Bean
-	@Primary
-	public RestTemplate restTemplate(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
-									 OkHttpClient okHttpClient,
-									 @Qualifier("enhancedRestTemplateInitializer") BaseApplicationInitializer initializer) {
-		return EnhancedRestTemplate.assembleRestTemplate(mappingJackson2HttpMessageConverter, okHttpClient);
-	}
+    @LoadBalanced
+    @Bean
+    @Primary
+    public RestTemplate restTemplate(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
+                                     OkHttpClient okHttpClient,
+                                     @Qualifier("enhancedRestTemplateInitializer") BaseApplicationInitializer initializer) {
+        return EnhancedRestTemplate.assembleRestTemplate(mappingJackson2HttpMessageConverter, okHttpClient);
+    }
 
-	@Bean
-	@Primary
-	public ContextRefresher contextRefresher(ConfigurableApplicationContext context,
-											 RefreshScope scope) {
-		return new DefaultContextRefresher(context, scope);
-	}
+    @Bean
+    @Primary
+    public ContextRefresher contextRefresher(ConfigurableApplicationContext context,
+                                             RefreshScope scope) {
+        return new DefaultContextRefresher(context, scope);
+    }
 
-	@Bean
-	public RequestContextListener requestContextListener(){
-		return new RequestContextListener();
-	}
 
 }

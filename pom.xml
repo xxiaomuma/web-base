@@ -64,6 +64,8 @@
         <jasypt.starter.version>2.1.2</jasypt.starter.version>
         <mapstruct.version>1.3.0.Final</mapstruct.version>
         <okhttp.version>3.14.2</okhttp.version>
+        <!-- ttl -->
+        <ttl.version>2.12.1</ttl.version>
     </properties>
 
     <dependencyManagement>
@@ -245,6 +247,11 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${ttl.version}</version> <!-- 请根据需要选择版本 -->
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -2,7 +2,7 @@ package pers.xiaomuma.framework.standard.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pers.xiaomuma.framework.exception.ServiceUnavailableException;
+import pers.xiaomuma.framework.exception.RpcException;
 import pers.xiaomuma.framework.response.BaseResponse;
 import java.util.function.Function;
 
@@ -17,6 +17,6 @@ public class RpcServiceHelper {
         } catch (Exception e) {
             log.error("{}服务异常, error", methodName, e);
         }
-        throw new ServiceUnavailableException(String.format("%s服务异常，请稍后再试", methodName));
+        throw new RpcException(String.format("%s服务异常，请稍后再试", methodName));
     }
 }

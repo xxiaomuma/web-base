@@ -17,6 +17,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import pers.xiaomuma.framework.exception.AppBizException;
 import pers.xiaomuma.framework.exception.BadRequestParameterException;
 import pers.xiaomuma.framework.exception.InternalServerErrorException;
+import pers.xiaomuma.framework.exception.RpcException;
 import pers.xiaomuma.framework.response.BaseResponse;
 import pers.xiaomuma.framework.response.ResponseCode;
 import javax.validation.ConstraintViolation;
@@ -104,6 +105,12 @@ public class GlobalExceptionTranslator {
 	public <T> BaseResponse<T> handleError(Throwable e) {
 		logger.error("Internal Server Error", e);
 		return BaseResponse.failed(e.getMessage(), ResponseCode.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler(RpcException.class)
+	public <T> BaseResponse<T> handleError(RpcException e) {
+		logger.error("RPC Error Exception", e);
+		return BaseResponse.failed(String.format("服务异常，%s", e.getMessage()), ResponseCode.SERVER_RPC_ERROR);
 	}
 
 }

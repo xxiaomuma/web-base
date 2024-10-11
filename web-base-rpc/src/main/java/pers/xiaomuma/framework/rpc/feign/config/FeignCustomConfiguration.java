@@ -18,29 +18,29 @@ import pers.xiaomuma.framework.rpc.feign.interceptor.RpcFeignInterceptor;
 @Configuration
 public class FeignCustomConfiguration {
 
-	@Bean
-	public Retryer feignRetryer() {
-		return Retryer.NEVER_RETRY;
-	}
+    @Bean
+    public Retryer feignRetryer() {
+        return Retryer.NEVER_RETRY;
+    }
 
-	@Bean
-	@Scope("prototype")
-	public Feign.Builder feignHystrixBuilder(Retryer retryer) {
-		return HystrixFeign.builder()
-				.retryer(retryer)
-				.errorDecoder(new FeignErrorHandler());
-	}
+    @Bean
+    @Scope("prototype")
+    public Feign.Builder feignHystrixBuilder(Retryer retryer) {
+        return HystrixFeign.builder()
+                .retryer(retryer)
+                .errorDecoder(new FeignErrorHandler());
+    }
 
-	@Bean
-	public RpcFeignInterceptor rpcFeignInterceptor(ApplicationConstant applicationConstant) {
-		return new RpcFeignInterceptor(applicationConstant);
-	}
+    @Bean
+    public RpcFeignInterceptor rpcFeignInterceptor(ApplicationConstant applicationConstant) {
+        return new RpcFeignInterceptor(applicationConstant);
+    }
 
-	@Bean
-	@Primary
-	@Scope("prototype")
-	public Encoder multipartFormEncoder(ObjectFactory<HttpMessageConverters> messageConverters) {
-		return new SpringFormEncoder(new SpringEncoder(messageConverters));
-	}
+    @Bean
+    @Primary
+    @Scope("prototype")
+    public Encoder multipartFormEncoder(ObjectFactory<HttpMessageConverters> messageConverters) {
+        return new SpringFormEncoder(new SpringEncoder(messageConverters));
+    }
 
 }
