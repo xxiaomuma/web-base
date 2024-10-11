@@ -12,7 +12,7 @@
     <version>${revision}</version>
 
     <properties>
-        <nacos.version>2.1.1.RELEASE</nacos.version>
+        <nacos.version>2.1.2.RELEASE</nacos.version>
     </properties>
 
     <dependencies>
