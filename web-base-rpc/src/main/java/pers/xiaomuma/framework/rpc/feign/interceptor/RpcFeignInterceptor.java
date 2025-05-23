@@ -24,9 +24,9 @@ public class RpcFeignInterceptor implements RequestInterceptor {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RpcContextHolder.getContext();
 		if (Objects.nonNull(attributes)) {
 			HttpServletRequest request =  attributes.getRequest();
-			String token = request.getHeader(GlobalRequestHeader.Authorization);
+			String token = request.getHeader(GlobalRequestHeader.AUTHORIZATION);
 			if (StrUtil.isNotBlank(token)) {
-				template.header(GlobalRequestHeader.Authorization, token);
+				template.header(GlobalRequestHeader.AUTHORIZATION, token);
 			}
 		}
 		template.header(GlobalRequestHeader.APP_INFO, appName);

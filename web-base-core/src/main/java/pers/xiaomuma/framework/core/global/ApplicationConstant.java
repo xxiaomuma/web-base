@@ -1,5 +1,6 @@
 package pers.xiaomuma.framework.core.global;
 
+import cn.hutool.core.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -82,7 +83,7 @@ public class ApplicationConstant {
 
 
     public boolean isDevProfile() {
-        return StringUtils.isBlank(profile) || "DEV".equalsIgnoreCase(profile);
+        return StrUtil.isBlank(profile) || "DEV".equalsIgnoreCase(profile);
     }
 
     public boolean isTestProfile() {

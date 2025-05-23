@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;
 import pers.xiaomuma.framework.core.global.ApplicationConstant;
 import pers.xiaomuma.framework.serialize.JsonUtils;
 import pers.xiaomuma.framework.serialize.ObjectMapperFactory;
@@ -33,6 +34,11 @@ public class BaseConfiguration {
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
         //objectMapper.setPropertyNamingStrategy(new PropertyNamingStrategy.SnakeCaseStrategy());
         return new MappingJackson2HttpMessageConverter(objectMapper);
+    }
+
+    @Bean
+    public ProtobufHttpMessageConverter protobufHttpMessageConverter() {
+        return new ProtobufHttpMessageConverter();
     }
 
 }

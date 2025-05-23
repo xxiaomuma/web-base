@@ -55,14 +55,14 @@ public class ServiceClientConfiguration {
                 .addInterceptor(new OkHttpLoggingInterceptor(applicationConstant)).build();
     }
 
-    @Bean
+/*    @Bean
     public Client feignClient(CachingSpringLoadBalancerFactory cachingFactory,
                               SpringClientFactory clientFactory,
                               OkHttpClient okHttpClient) {
         // ribbon 路由规则拓展
         Client feignOkHttpClient = new CustomOkHttpFeignClient(okHttpClient);
         return new LoadBalancerFeignClient(feignOkHttpClient, cachingFactory, clientFactory);
-    }
+    }*/
 
     @Bean
     public BaseApplicationInitializer enhancedRestTemplateInitializer(ApplicationContext ctx) {
@@ -75,7 +75,7 @@ public class ServiceClientConfiguration {
     public RestTemplate restTemplate(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter,
                                      OkHttpClient okHttpClient,
                                      @Qualifier("enhancedRestTemplateInitializer") BaseApplicationInitializer initializer) {
-        return EnhancedRestTemplate.assembleRestTemplate(mappingJackson2HttpMessageConverter, okHttpClient);
+        return new RestTemplate();
     }
 
     @Bean

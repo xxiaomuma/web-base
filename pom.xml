@@ -25,7 +25,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <revision>20241010-SNAPSHOT</revision>
+        <revision>20250523-SNAPSHOT</revision>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- spring -->
@@ -66,7 +66,16 @@
         <okhttp.version>3.14.2</okhttp.version>
         <!-- ttl -->
         <ttl.version>2.12.1</ttl.version>
+        <!-- protobuf 序列化 -->
+        <protobuf.version>3.8.0</protobuf.version>
+        <protostuff.version>1.7.4</protostuff.version>
+        <!-- 日志 -->
+        <bizlog.version>3.0.6</bizlog.version>
     </properties>
+
+    <dependencies>
+
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -252,6 +261,26 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>${ttl.version}</version> <!-- 请根据需要选择版本 -->
+            </dependency>
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-core</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-runtime</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.mouzt</groupId>
+                <artifactId>bizlog-sdk</artifactId>
+                <version>${bizlog.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

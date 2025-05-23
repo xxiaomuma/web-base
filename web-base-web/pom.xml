@@ -58,6 +58,10 @@
             <artifactId>spring-plugin-core</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.mouzt</groupId>
+            <artifactId>bizlog-sdk</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
